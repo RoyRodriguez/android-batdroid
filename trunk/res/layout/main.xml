@@ -4,14 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <!--TextView android:id="@+id/text_start"
+    <TextView android:id="@+id/text_start"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Output Window" />
-    <Button android:id="@+id/button_start_server"
+    <!--Button android:id="@+id/button_start_server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Provisioning Server" />
+            android:text="Start Tether" />
    <TextView android:id="@+id/text_stop"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -19,7 +19,8 @@
     <Button android:id="@+id/button_stop_server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop Provisioning Server" /-->
+            android:text="Stop Tether" /-->
+
 <ScrollView android:id="@+id/mainview" 
                 android:orientation="vertical"
                 android:layout_width="fill_parent" 
