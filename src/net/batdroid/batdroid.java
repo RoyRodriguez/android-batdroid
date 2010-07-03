@@ -32,6 +32,10 @@ import android.widget.TableRow;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.view.View;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 
 
 public class batdroid extends Activity implements OnClickListener
@@ -65,6 +69,11 @@ public class batdroid extends Activity implements OnClickListener
     	// Register the onClick listener with the implementation above
     	button_stop.setOnClickListener(this);
       
+        // Init Table-Rows
+        this.startTblRow = (TableRow)findViewById(R.id.startRow);
+        this.stopTblRow = (TableRow)findViewById(R.id.stopRow);
+
+        toggleStartStop();
       // do startup checks
       if (this.application.startupCheckPerformed == false) {
         this.application.startupCheckPerformed = true;
@@ -122,4 +131,51 @@ public class batdroid extends Activity implements OnClickListener
 		}
 
 	}
+/*
+        private static final int MENU_SETUP = 0;
+        private static final int MENU_LOG = 1;
+        private static final int MENU_ABOUT = 2;
+        private static final int MENU_ACCESS = 3;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean supRetVal = super.onCreateOptionsMenu(menu);
+        SubMenu setup = menu.addSubMenu(0, MENU_SETUP, 0, getString(R.string.main_activity_settings));
+        setup.setIcon(drawable.ic_menu_preferences);
+        //if (this.application.accessControlSupported) {
+        //        SubMenu accessctr = menu.addSubMenu(0, MENU_ACCESS, 0, getString(R.string.main_activity_accesscontrol));
+        //        accessctr.setIcon(drawable.ic_menu_manage);  
+        //}
+        SubMenu log = menu.addSubMenu(0, MENU_LOG, 0, getString(R.string.main_activity_showlog));
+        log.setIcon(drawable.ic_menu_agenda);
+        SubMenu about = menu.addSubMenu(0, MENU_ABOUT, 0, getString(R.string.main_activity_about));
+        about.setIcon(drawable.ic_menu_info_details);          
+        return supRetVal;
+    }
+   
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        boolean supRetVal = super.onOptionsItemSelected(menuItem);
+        Log.d(MSG_TAG, "Menuitem:getId  -  "+menuItem.getItemId());
+        switch (menuItem.getItemId()) {
+                case MENU_SETUP :
+                        startActivityForResult(new Intent(
+                                        batdroid.this, SetupActivity.class), 0);
+                        break;
+                case MENU_LOG :
+                        startActivityForResult(new Intent(
+                                        batdroid.this, LogActivity.class), 0);
+                        break;
+                case MENU_ABOUT :
+                        this.openAboutDialog();
+                        break;
+                case MENU_ACCESS :
+                        startActivityForResult(new Intent(
+                                        batdroid.this, AccessControlActivity.class), 0);          
+        }
+        return supRetVal;
+    } */   
+
+
+
 }
