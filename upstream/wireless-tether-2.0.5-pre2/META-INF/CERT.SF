@@ -1,0 +1,127 @@
+Signature-Version: 1.0
+Created-By: 1.0 (Android)
+SHA1-Digest-Manifest: PEgM48zmf1UXmt1I1i6RuotEGN4=
+
+Name: res/layout/toastview.xml
+SHA1-Digest: 8Ke0WAFzbr+3J6pIK5yElilvU+4=
+
+Name: res/raw/tether
+SHA1-Digest: Z27XBDmU9IYkJxV5hINBKVxPKzM=
+
+Name: res/drawable/secmedium.png
+SHA1-Digest: 7BxN7ar24OGc+vrVnSaaHoYDvoE=
+
+Name: res/raw/blue_down_sh
+SHA1-Digest: iuugdtOWHvGIOSfBgV3ie8iJfjE=
+
+Name: res/raw/tiwlan_ini
+SHA1-Digest: NNFOxj/Kl0rM8lVmJe4t9BtZ9Nc=
+
+Name: res/layout/accesscontrolview.xml
+SHA1-Digest: aihswiAc3D72U6S2mflzdYJxxgE=
+
+Name: res/raw/wpa_supplicant_conf
+SHA1-Digest: tpxLV7VWBO36ekss+4v2LwZI1ts=
+
+Name: res/drawable/background.jpg
+SHA1-Digest: Xxnz3teJTIqsol9Es936cUVaugg=
+
+Name: res/raw/dnsmasq_conf
+SHA1-Digest: vXmx8NZPtXbyhq22a8njjwSlXHs=
+
+Name: res/raw/ifconfig
+SHA1-Digest: 7W0H/lTo0hwTsbGG4KOmZz/joOY=
+
+Name: resources.arsc
+SHA1-Digest: UjI/Og54250V0nHtnFmxoAS/oL8=
+
+Name: res/raw/ultra_bcm_config
+SHA1-Digest: th8Usz5+Qw6shcC6VxGkDCom99I=
+
+Name: res/layout/aboutview.xml
+SHA1-Digest: FwacGtGLsT0WeFCwLpmKklLzBIA=
+
+Name: lib/armeabi/libnativetask.so
+SHA1-Digest: 5fAWzvx9sZzm0yMQWGpR2W3wZVg=
+
+Name: AndroidManifest.xml
+SHA1-Digest: SFnv635uVCKu16/wqB8XU73xOJg=
+
+Name: res/layout/donateview.xml
+SHA1-Digest: KEVR375zFGVaTY/OhhFc6qqNWSw=
+
+Name: res/raw/tether_edify
+SHA1-Digest: h3nuEjX+YevrUSyRdar0itP2zbM=
+
+Name: res/layout/clientrow.xml
+SHA1-Digest: /7PEAnw0igPo7MO54Mk4G3Ccu3U=
+
+Name: res/raw/pand
+SHA1-Digest: /AuJI2QtMWN56Dlzngr/XfwsuyA=
+
+Name: res/drawable/start.png
+SHA1-Digest: FxfB+cPifwk8GvhMBaiEbXPPaKg=
+
+Name: res/layout/nonetfilterview.xml
+SHA1-Digest: 8gP3/oG6A4Zm0p1F8vXvVHOo8LM=
+
+Name: res/drawable/start_notification.png
+SHA1-Digest: 6+HGW5V7CIzSZDXV+W1Fb7z+qCY=
+
+Name: res/drawable/seclow.png
+SHA1-Digest: acBw1ijC06nSD7LXk/x4zdM3cps=
+
+Name: res/layout/updateview.xml
+SHA1-Digest: +dVMugCH/wa5fz1T+O2mlq75I7g=
+
+Name: classes.dex
+SHA1-Digest: c+/2EQAi6T1XnNni80cEhMdAB9s=
+
+Name: res/drawable/stop.png
+SHA1-Digest: bjouCSbJdiy+5rvfQns8S9cHRwo=
+
+Name: res/layout/noaccesscontrolview.xml
+SHA1-Digest: Sjd8OPwoMP9YFev/Fnrlgj+LJoI=
+
+Name: res/layout/main.xml
+SHA1-Digest: yJ1GbQD86JyZspN0W5YXIKwnXlg=
+
+Name: res/layout/setupview.xml
+SHA1-Digest: VseEiD1rS91bq7L9ZU8Mx47EdCU=
+
+Name: res/layout/norootview.xml
+SHA1-Digest: CW6nbD4ourIfrRshcIpwtc3Jij4=
+
+Name: res/raw/iwconfig
+SHA1-Digest: viHeRp0PutssUWzJHr3x4UDX7SQ=
+
+Name: res/drawable/icon.png
+SHA1-Digest: qYGUHQCG6f26Td79PQwagxWupy8=
+
+Name: res/raw/dnsmasq
+SHA1-Digest: PNTKZSuulUq2b4Wzv2WKKIFrtLg=
+
+Name: res/drawable/bluetooth.png
+SHA1-Digest: TraDaBRwJgDxmNIu+t2HxWLrr28=
+
+Name: res/drawable/wifi.png
+SHA1-Digest: lKuNyW0+8v+xt8hmP0PewViwo0M=
+
+Name: res/raw/tether_conf
+SHA1-Digest: +QBUQzKN47HXA2hyWKytGjZULq8=
+
+Name: res/drawable/battery.png
+SHA1-Digest: N0yxNhduJxDwEXuTZcB3mGFdU3M=
+
+Name: res/layout/logview.xml
+SHA1-Digest: C2NtplQSsNqptDE7i7O5SlFbWy8=
+
+Name: res/drawable/sechigh.png
+SHA1-Digest: 4J776lp5wG7HovWgOA2LyouGHew=
+
+Name: res/raw/blue_up_sh
+SHA1-Digest: JjaQ5NnV9esEqByhMa2tnwdj3bk=
+
+Name: res/raw/iptables
+SHA1-Digest: 0iiUtnMdNETINBwSpbihyMSoflA=
+
