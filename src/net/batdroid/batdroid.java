@@ -44,11 +44,10 @@ public class batdroid extends Activity implements OnClickListener
 	public boolean tether_on = false;
 	private	ImageView button_start = null;
 	private	ImageView button_stop = null;
-        private TableRow startTblRow = null;
-        private TableRow stopTblRow = null;
-
+  private TableRow startTblRow = null;
+  private TableRow stopTblRow = null;
+  
   private BatDroidApplication application = null;
-
 
     /** Called when the activity is first created. */
     @Override
@@ -83,10 +82,10 @@ public class batdroid extends Activity implements OnClickListener
         //  this.openNotRootDialog();
         
         // Check if binaries need to be updated
-        if (this.application.binariesExists() == false /*|| this.application.coretask.filesetOutdated()*/) {
-          //if (this.application.coretask.hasRootPermission()) {
+        if (this.application.binariesExists() == false || this.application.coretask.filesetOutdated()) {
+          if (this.application.coretask.hasRootPermission()) {
             this.application.installFiles();
-            //}
+          }
         }
       }
     }
