@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <!--TextView android:id="@+id/text_start"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Output Window" />
+    <Button android:id="@+id/button_start_server"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Provisioning Server" />
+   <TextView android:id="@+id/text_stop"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Output Window" />
+    <Button android:id="@+id/button_stop_server"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop Provisioning Server" /-->
+<ScrollView android:id="@+id/mainview" 
+                android:orientation="vertical"
+                android:layout_width="fill_parent" 
+                android:layout_height="fill_parent">
+                <TableLayout android:id="@+id/mainLayout"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" 
+                        android:layout_width="wrap_content">
+                        <TableRow android:id="@+id/startRow">
+                                <TableLayout
+                                        android:layout_gravity="center"
+                                        android:layout_height="wrap_content" 
+                                        android:layout_width="wrap_content">
+                                        <TableRow>
+                                                <ImageView android:id="@+id/startTetherBtn"
+                                                        android:src="@drawable/start" 
+                                                android:layout_width="180dp"
+                                                android:layout_height="135dp"
+                                                        android:layout_gravity="center_horizontal" />
+                                        </TableRow>
+                                        <TableRow>
+                                                <TextView android:id="@+id/startText"
+                                                        android:text="@string/main_layout_presstostart"
+                                                        android:layout_gravity="center_vertical"
+                                                        android:paddingTop="10px"
+                                                        android:textStyle="bold"
+                                                        android:textColor="#FFFFFFFF" />
+                                        </TableRow>
+                                </TableLayout>
+                        </TableRow>
+                        <TableRow android:id="@+id/stopRow">
+                                <TableLayout
+                                        android:layout_gravity="center"
+                                        android:layout_height="wrap_content" 
+                                        android:layout_width="wrap_content">
+                                        <TableRow>
+                                                <ImageView android:id="@+id/stopTetherBtn"
+                                                        android:src="@drawable/stop" 
+                                                android:layout_width="180dp"
+                                                android:layout_height="135dp"
+                                                        android:layout_gravity="center_horizontal" />                   
+                                        </TableRow>
+                                        <TableRow>
+                                                <TextView android:id="@+id/stopText"
+                                                        android:text="@string/main_layout_presstostop"
+                                                        android:paddingTop="10px"
+                                                        android:layout_gravity="center_vertical"
+                                                        android:textStyle="bold"
+                                                        android:textColor="#FFFFFFFF" />
+                                        </TableRow>
+                                </TableLayout>                                  
+                        </TableRow>     
+                </TableLayout>
+        </ScrollView>
+
+</LinearLayout>
