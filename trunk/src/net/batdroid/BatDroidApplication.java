@@ -246,18 +246,23 @@ public class BatDroidApplication extends Application {
 	
 	// Start/Stop BatDroid
     public boolean startBatDroid() {
-
+Log.d(MSG_TAG, "START OF STARTBATDROIDMETHOD");
       // Updating all configs
       this.updateConfiguration();
+      Log.d(MSG_TAG, "AFTER UPDATECONFIG");
       
-      this.disableWifi();
+this.disableWifi();
       
       // Update resolv.conf-file
       String dns[] = this.coretask.updateResolvConf();     
       
     	// Starting service
+//Log.d(MSG_TAG, "ASASAASASASASASA");
+
     	if (this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc start 1")) {
         
+
+//Log.d(MSG_TAG, "BBBNBNBNBNBNBNBNBNNB");
         //this.clientConnectEnable(true);
     		this.trafficCounterEnable(true);
     		this.dnsUpdateEnable(dns, true);

@@ -96,7 +96,7 @@ public class batdroid extends Activity implements OnClickListener
 
     // Implement the OnClickListener callback
     public void onClick(View v) {
-    
+  
     	int id = v.getId();
     	switch(id){
     		case R.id.startBatmanBtn:{
@@ -104,14 +104,16 @@ public class batdroid extends Activity implements OnClickListener
     			TextView test = (TextView)findViewById(R.id.text_start);
 		    	test.setText("Processed event to start B.A.T.M.A.N..");
 			batman_on = true;
-			toggleStartStop();	
+			toggleStartStop();
+			application.startBatDroid();
     		}break;
     		case R.id.stopBatmanBtn:{
                         Log.d(MSG_TAG, "StopBtn pressed ...");
     			TextView test = (TextView)findViewById(R.id.text_start);
 		    	test.setText("Processed event to stop B.A.T.M.A.N.");
 			batman_on = false;
-			toggleStartStop();	
+			toggleStartStop();
+			application.stopBatDroid();	
     		}break;
     		default:{
     		//error handling here
@@ -126,10 +128,15 @@ public class batdroid extends Activity implements OnClickListener
 		{//the Batman is off
 			this.startTblRow.setVisibility(View.VISIBLE);
 			this.stopTblRow.setVisibility(View.GONE);
+
+			
+
 		}else if(batman_on==true)
 		{//the Batman is on
 			this.startTblRow.setVisibility(View.GONE);
 			this.stopTblRow.setVisibility(View.VISIBLE);		
+			
+			//application.startBatDroid();
 		}
 
 	}
