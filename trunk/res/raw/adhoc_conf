@@ -1,4 +1,4 @@
-device.type=nexusone
+device.type=dream
 tether.mode=wifi
 wifi.interface=tiwlan0
 wifi.essid=batman
@@ -8,6 +8,6 @@ wifi.encryption=open
 wifi.driver=wext
 wifi.setup=wpa_supplicant
 wifi.encryption.key=none
-ip.gateway=10.0.0.1
+ip.gateway=10.0.0.4
 ip.netmask=255.0.0.0
 ip.network=10.0.0.0
