@@ -1,8 +1,8 @@
 device.type=nexusone
 tether.mode=wifi
-wifi.interface=eth0
-wifi.essid=AndroidTether
-wifi.channel=11
+wifi.interface=tiwlan0
+wifi.essid=batman
+wifi.channel=5
 wifi.txpower=disabled
 wifi.encryption=open
 wifi.driver=wext

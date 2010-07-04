@@ -421,7 +421,8 @@ public class BatDroidApplication extends Application {
     	new Thread(new Runnable(){
 			public void run(){
 				String message = null;
-				// adhoc
+			
+			// adhoc
 		    	if (message == null) {
 			    	message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/adhoc", "0755", R.raw.adhoc);
 		    	}
@@ -429,6 +430,11 @@ public class BatDroidApplication extends Application {
 		    	if (message == null) {
 			    	message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/iptables", "0755", R.raw.iptables);
 		    	}
+
+			//Batmand binarie,  "batmand-rv1543_armv6l" renamed to "batmand"
+			 if (message == null) {
+            			message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/batmand", "0755", 	R.raw.batmand);
+          }
 		    	// ifconfig
 		    	if (message == null) {
 			    	message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/ifconfig", "0755", R.raw.ifconfig);
