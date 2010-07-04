@@ -1,6 +1,6 @@
 # - configuration --
 SDK_ROOT=/Developer/Android
-NDK_ROOT=$(SDK_ROOT)/android-ndk-1.6_r1
+NDK_ROOT=$(SDK_ROOT)/ndk
 DEVICE=HT95LKF03972
 
 # - paths --
