@@ -344,61 +344,74 @@ action() == "start" && (
     # Set "mode"-Property
     #
     setprop("tether.mode","bt");
-
+###################################################################################################################
     #
     # Bluetooth - start pand
     #
-    run_program("/data/data/net.batdroid/bin/pand --listen --role NAP " +
-                "--devup /data/data/net.batdroid/bin/blue-up.sh " +
-                "--devdown /data/data/net.batdroid/bin/blue-down.sh " +
-                "--pidfile /data/data/net.batdroid/var/pand.pid");
+    #run_program("/data/data/net.batdroid/bin/pand --listen --role NAP " +
+    #            "--devup /data/data/net.batdroid/bin/blue-up.sh " +
+    #            "--devdown /data/data/net.batdroid/bin/blue-down.sh " +
+    #            "--pidfile /data/data/net.batdroid/var/pand.pid");
   );
+
+
+###################################################################################################################
 
   #
   # Remove old rules
   #
-  run_program("/data/data/net.batdroid/bin/iptables -N wireless-tether");
-  run_program("/data/data/net.batdroid/bin/iptables -F wireless-tether");  
-  run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING");
-  run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING");
-  run_program("/data/data/net.batdroid/bin/iptables -t nat -F");
+#  run_program("/data/data/net.batdroid/bin/iptables -N wireless-tether");
+#  run_program("/data/data/net.batdroid/bin/iptables -F wireless-tether");  
+#  run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING");
+#  run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING");
+#  run_program("/data/data/net.batdroid/bin/iptables -t nat -F");
+
 
   #
   # Bring up NAT rules
   #
-  log(
-    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -m state --state ESTABLISHED,RELATED -j ACCEPT") &&
-    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -s " + getcfg("ip.network") + "/24 -j ACCEPT") &&
-    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -j DROP") &&
-    run_program("/data/data/net.batdroid/bin/iptables -A FORWARD -j wireless-tether") &&
-    run_program("/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s " +
-               getcfg("ip.network") + "/24 -j MASQUERADE"),
-    "Enabling NAT rules");
+#  log(
+#    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -m state --state ESTABLISHED,RELATED -j ACCEPT") &&
+#    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -s " + getcfg("ip.network") + "/24 -j ACCEPT") &&
+#    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -j DROP") &&
+#    run_program("/data/data/net.batdroid/bin/iptables -A FORWARD -j wireless-tether") &&
+#    run_program("/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s " +
+#               getcfg("ip.network") + "/24 -j MASQUERADE"),
+#    "Enabling NAT rules");
 
+
+###################################################################################################################
   #
   # IP forwarding
   #
-  log(file_write("/proc/sys/net/ipv4/ip_forward", "1"), "Enabling IP forwarding");
+  #log(file_write("/proc/sys/net/ipv4/ip_forward", "1"), "Enabling IP forwarding");
 
   #
   # dnsmasq for wifi tether (bluetooth has pand start it)
   #
-  getcfg("tether.mode") == "wifi" &&
-      run_program("/data/data/net.batdroid/bin/dnsmasq -i " + getcfg("wifi.interface") +" "+
-                  "--resolv-file=/data/data/net.batdroid/conf/resolv.conf " +
-                  "--conf-file=/data/data/net.batdroid/conf/dnsmasq.conf");
+  #getcfg("tether.mode") == "wifi" &&
+  #    run_program("/data/data/net.batdroid/bin/dnsmasq -i " + getcfg("wifi.interface") +" "+
+  #                "--resolv-file=/data/data/net.batdroid/conf/resolv.conf " +
+  #                "--conf-file=/data/data/net.batdroid/conf/dnsmasq.conf");
 
+
+###################################################################################################################
+
+
+###################################################################################################################
   #
   # Access control
   #
-  file_exists("/data/data/net.batdroid/conf/whitelist_mac.conf") &&
-    log(
-      run_program("/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -s " + getcfg("ip.network") + "/24 -j DROP") &&
-      whitelist_macs("/data/data/net.batdroid/conf/whitelist_mac.conf"),
-    "Enabling access control."
-    );
-  log("Tethering now running");
+#  file_exists("/data/data/net.batdroid/conf/whitelist_mac.conf") &&
+#    log(
+#      run_program("/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -s " + getcfg("ip.network") + "/24 -j DROP") &&
+#      whitelist_macs("/data/data/net.batdroid/conf/whitelist_mac.conf"),
+#    "Enabling access control."
+#    );
+#  log("Tethe##########################################################################################ring now running");
 );
+
+###################################################################################################################
 
 #
 # Actions when stopping tether
@@ -409,16 +422,20 @@ action() == "stop" && (
   #
   setprop("tether.status","stopped");
 
+
+###################################################################################################################
   #
   # Bluetooth, kill pand and and dnsmasq processes
   #
-  getcfg("tether.mode") == "bt" && (
-    run_program("/data/data/net.batdroid/bin/pand -K");
-    sleep("1");
-    kill_process("pand");
-    file_unlink("/data/data/net.batdroid/var/pand.pid");
-    kill_process("dnsmasq");
+#  getcfg("tether.mode") == "bt" && (
+#    run_program("/data/data/net.batdroid/bin/pand -K");
+#    sleep("1");
+#    kill_process("pand");
+#    file_unlink("/data/data/net.batdroid/var/pand.pid");
+#    kill_process("dnsmasq");
   );
+
+###################################################################################################################
   
   #
   # Wifi mode, bring interface down, kill dnsmasq/wpa_supplicant, remove module.
@@ -449,50 +466,57 @@ action() == "stop" && (
     file_unlink("/data/data/net.batdroid/var/setssid.pid");
   );
 
+
+
+##########################################################################################
   #
   # Disable forwarding and remove NAT rules.
   #
-  log(file_write("/proc/sys/net/ipv4/ip_forward", "0"), "Disabling forwarding");
-  log(
-    run_program("/data/data/net.batdroid/bin/iptables -D FORWARD -j wireless-tether") &&
-    run_program("/data/data/net.batdroid/bin/iptables -F wireless-tether") &&  
-    run_program("/data/data/net.batdroid/bin/iptables -X wireless-tether") && 
-    run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING") &&
-    run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING") &&
-    run_program("/data/data/net.batdroid/bin/iptables -t nat -F"),
-  "Disabling NAT rules");
+ # log(file_write("/proc/sys/net/ipv4/ip_forward", "0"), "Disabling forwarding");
+ # log(
+ #   run_program("/data/data/net.batdroid/bin/iptables -D FORWARD -j wireless-tether") &&
+ #   run_program("/data/data/net.batdroid/bin/iptables -F wireless-tether") &&  
+ #   run_program("/data/data/net.batdroid/bin/iptables -X wireless-tether") && 
+ #   run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING") &&
+ #   run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING") &&
+ #   run_program("/data/data/net.batdroid/bin/iptables -t nat -F"),
+ # "Disabling NAT rules");
 
-  log("Tethering now stopped");
+ # log("Tethering now stopped");
   
-);
+#);
+
+##########################################################################################
 
 #
 # Actions when restarting access control
 #
-action() == "restartsecwifi" && (
+#action() == "restartsecwifi" && (
   #
   # Remove old rules
   #
-  log (
-    run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING") &&
-    run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING"),
-  "Disabling NAT rules");
+#  log (
+#    run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING") &&
+#    run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING"),
+#  "Disabling NAT rules");
 
   #
   # Bring up NAT rules
   #
-  log(
-    run_program("/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s " +
-               getcfg("ip.network") + "/24 -j MASQUERADE"),
-    "Enabling NAT rules");
+#  log(
+#    run_program("/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s " +
+#               getcfg("ip.network") + "/24 -j MASQUERADE"),
+#    "Enabling NAT rules");
 
+
+###################################################################################################################
   #
   # Access control
   #
-  file_exists("/data/data/net.batdroid/conf/whitelist_mac.conf") &&
-    log(
-      run_program("/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -s " + getcfg("ip.network") + "/24 -j DROP") &&
-      whitelist_macs("/data/data/net.batdroid/conf/whitelist_mac.conf"),
-    "Enabling access control."
-    );
-);
+#  file_exists("/data/data/net.batdroid/conf/whitelist_mac.conf") &&
+#    log(
+#     run_program("/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -s " + getcfg("ip.network") + "/24 -j DROP") &&
+#     whitelist_macs("/data/data/net.batdroid/conf/whitelist_mac.conf"),
+#   "Enabling access control."
+#    );
+#);

@@ -260,7 +260,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                 }
                         }
                         else if (key.equals("channelpref")) {
-                                String newChannel = sharedPreferences.getString("channelpref", "6");
+                                String newChannel = sharedPreferences.getString("channelpref", "5");
                                 if (SetupActivity.this.currentChannel.equals(newChannel) == false) {
                                         SetupActivity.this.currentChannel = newChannel;
                                         message = "Channel changed to '"+newChannel+"'.";
