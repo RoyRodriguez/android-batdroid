@@ -50,7 +50,7 @@ public class BatDroidApplication extends Application {
 	public static final String MSG_TAG = "BATDROID -> BatDroidApplication";
 	
 	public final String DEFAULT_PASSPHRASE = "abcdefghijklm";
-	public final String DEFAULT_LANNETWORK = "192.168.2.0/24";
+	public final String DEFAULT_LANNETWORK = "10.0.0.0/8";
 	public final String DEFAULT_ENCSETUP   = "wpa_supplicant";
 	
 	// Devices-Information
@@ -179,7 +179,7 @@ public class BatDroidApplication extends Application {
 		
 		boolean encEnabled = this.settings.getBoolean("encpref", false);
 		boolean acEnabled = this.settings.getBoolean("acpref", false);
-		String ssid = this.settings.getString("ssidpref", "batdroid");
+		String ssid = this.settings.getString("ssidpref", "batman");
     String txpower = this.settings.getString("txpowerpref", "disabled");
     String lannetwork = this.settings.getString("lannetworkpref", DEFAULT_LANNETWORK);
     String wepkey = this.settings.getString("passphrasepref", DEFAULT_PASSPHRASE);
@@ -236,7 +236,7 @@ public class BatDroidApplication extends Application {
 		 */
 		if (deviceType.equals(Configuration.DEVICE_DREAM)) {
 			Hashtable<String,String> values = new Hashtable<String,String>();
-			values.put("dot11DesiredSSID", this.settings.getString("ssidpref", "batdroid"));
+			values.put("dot11DesiredSSID", this.settings.getString("ssidpref", "batman"));
 			values.put("dot11DesiredChannel", this.settings.getString("channelpref", "5"));
 			this.tiwlan.write(values);
 		}
@@ -246,23 +246,21 @@ public class BatDroidApplication extends Application {
 	
 	// Start/Stop BatDroid
     public boolean startBatDroid() {
-Log.d(MSG_TAG, "START OF STARTBATDROIDMETHOD");
+
       // Updating all configs
       this.updateConfiguration();
-      Log.d(MSG_TAG, "AFTER UPDATECONFIG");
+     
       
-this.disableWifi();
+	this.disableWifi();
       
       // Update resolv.conf-file
       String dns[] = this.coretask.updateResolvConf();     
       
     	// Starting service
-//Log.d(MSG_TAG, "ASASAASASASASASA");
+
 
     	if (this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc start 1")) {
         
-
-//Log.d(MSG_TAG, "BBBNBNBNBNBNBNBNBNNB");
         //this.clientConnectEnable(true);
     		this.trafficCounterEnable(true);
     		this.dnsUpdateEnable(dns, true);
@@ -278,7 +276,7 @@ this.disableWifi();
   public boolean stopBatDroid() {
 		// Diaabling polling-threads
     this.trafficCounterEnable(false);
-		this.dnsUpdateEnable(false);
+    this.dnsUpdateEnable(false);
 		//this.clientConnectEnable(false);    
     this.releaseWakeLock();
     boolean stopped = this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc stop 1");
