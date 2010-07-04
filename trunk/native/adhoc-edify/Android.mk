@@ -4,7 +4,7 @@ LOCAL_PATH := $(call my-dir)
 
 updater_src_files := \
 	install.c \
-	tether.c
+	adhoc.c
 
 include $(CLEAR_VARS)
 
@@ -16,7 +16,7 @@ LOCAL_STATIC_LIBRARIES := libedify
 
 LOCAL_SHARED_LIBRARIES := libcutils
 
-LOCAL_MODULE := tether
+LOCAL_MODULE := adhoc
 
 include $(BUILD_EXECUTABLE)
 

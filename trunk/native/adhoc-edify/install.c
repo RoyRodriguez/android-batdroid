@@ -36,7 +36,7 @@
 #include "cutils/properties.h"
 #include <sys/system_properties.h>
 #include "edify/expr.h"
-#include "tether.h"
+#include "adhoc.h"
 
 #define init_module(mod, len, opts) syscall(__NR_init_module, mod, len, opts)
 #define delete_module(mod, flags) syscall(__NR_delete_module, mod, flags)
@@ -340,7 +340,7 @@ char* WhiteListMacsFn(const char* name, State* state, int argc, Expr* argv[]) {
     while(fgets(buffer, sizeof(buffer), macs) && returncode == 0) {
         /* process the line */
       sscanf(buffer, "%s", buffer);
-      sprintf(command,"/data/data/android.tether/bin/iptables -t nat -I PREROUTING -m mac --mac-source %s -j ACCEPT", buffer);
+      sprintf(command,"/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -m mac --mac-source %s -j ACCEPT", buffer);
       //fprintf(stdout, "Enabling whitelist for: %s \n", command);
       returncode = system(command);
     }
@@ -426,7 +426,7 @@ char* GetCfgFn(const char* name, State* state, int argc, Expr* argv[]) {
     char* result = NULL;
     char* buffer = NULL;
     char* key;
-    char *filename = "/data/data/android.tether/conf/tether.conf";
+    char *filename = "/data/data/net.batdroid/conf/adhoc.conf";
     if (ReadArgs(state, argv, 1, &key) < 0) {
         return NULL;
     }
@@ -576,7 +576,7 @@ char* LogFn(const char* name, State* state, int argc, Expr* argv[]) {
         "<div class=\"date\">%s</div><div class=\"action\">%s...</div><div class=\"output\"></div><div class=\"done\">done</div><hr>",asctime(localtime(&time_now)),message);
     }
     else {
-      property_set("tether.status","failed");
+      property_set("adhoc.status","failed");
       fprintf(((UpdaterInfo*)(state->cookie))->log_fd,
         "<div class=\"date\">%s</div><div class=\"action\">%s...</div><div class=\"output\"></div><div class=\"failed\">failed</div><hr>",asctime(localtime(&time_now)),message);
     }
