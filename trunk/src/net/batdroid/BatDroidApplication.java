@@ -81,7 +81,7 @@ public class BatDroidApplication extends Application {
 
     // init notificationManager
     //this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-    //this.notification = new Notification(R.drawable.start_notification, "Wireless Tether", System.currentTimeMillis());
+    //this.notification = new Notification(R.drawable.start_notification, "B.A.T.M.A.N.", System.currentTimeMillis());
     //this.mainIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
     //this.accessControlIntent = PendingIntent.getActivity(this, 1, new Intent(this, AccessControlActivity.class), 0);
   }
