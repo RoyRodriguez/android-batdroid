@@ -1,5 +1,5 @@
 # This script controls actions to be taken when the tethering is started or stopped.
-# @Version=67
+# @Version=71
 # ------------------------------------------------------------------------------------
 # It uses the "edify" language, which is also used for the android OTA update scripts. 
 # See:
@@ -14,9 +14,6 @@ action() == "start" && (
   # Set "status"-Property
   #
   setprop("tether.status","running");
-
-  is_substring("bahamas", getprop("ro.product.device")) &&
-    run_program("/system/bin/ip route delete table gprs");
 
   #
   # Wifi mode, do some wifi things...
@@ -50,18 +47,13 @@ action() == "start" && (
 	      #
 	      # Bring up wifi interface
 	      #
-	      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-	                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+	      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
 	                  run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
-	      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-	                      + " mode ad-hoc"), "Setting ad-hoc mode");
-	      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-	                      + " essid " + getcfg("wifi.essid")), "Setting essid");
-	      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-	                      + " channel " + getcfg("wifi.channel")), "Setting channel");
+	      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " mode ad-hoc"), "Setting ad-hoc mode");
+	      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " essid " + getcfg("wifi.essid")), "Setting essid");
+	      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " channel " + getcfg("wifi.channel")), "Setting channel");
 	      getcfg("wifi.txpower") != "disabled" && (
-	      	log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-	                      + " txpower " + getcfg("wifi.txpower")), "Setting transmit power");     	
+	      	log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " txpower " + getcfg("wifi.txpower")), "Setting transmit power");     	
 	      );
 	   );
 	   is_substring("softap", getcfg("wifi.driver")) && (
@@ -91,8 +83,7 @@ action() == "start" && (
 	      #
 	      # Bring up wifi interface
 	      #
-	      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-	                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+	      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
 	                  run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
 	   );
     );
@@ -119,16 +110,11 @@ action() == "start" && (
       #
       # Bring up wifi interface
       #
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " mode ad-hoc"), "Setting ad-hoc mode");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " essid " + getcfg("wifi.essid")), "Setting essid");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " channel " + getcfg("wifi.channel")), "Setting channel");
-      run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " commit");
-      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " mode ad-hoc"), "Setting ad-hoc mode");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " essid " + getcfg("wifi.essid")), "Setting essid");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " channel " + getcfg("wifi.channel")), "Setting channel");
+      run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " commit");
+      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
                   run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");                  
     );
     
@@ -143,23 +129,21 @@ action() == "start" && (
       #
       # Bring up wifi interface
       #
-      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
                   run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " mode ad-hoc"), "Setting ad-hoc mode");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " essid " + getcfg("wifi.essid")), "Setting essid");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " channel " + getcfg("wifi.channel")), "Setting channel");
-      run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " commit");
-      run_program("/data/data/net.batdroid/bin/iwconfig "+getcfg("wifi.interface")+" mode ad-hoc essid "+getcfg("wifi.essid")+ " persist &");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " mode ad-hoc"), "Setting ad-hoc mode");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " essid " + getcfg("wifi.essid")), "Setting essid");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " channel " + getcfg("wifi.channel")), "Setting channel");
+      run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " commit");
+      
+      file_exists("/data/data/net.batdroid/bin/fixpersist.sh") && (
+		run_program("/data/data/net.batdroid/bin/fixpersist.sh "+ getcfg("wifi.interface") +" "+ getcfg("wifi.essid") +" "+ getcfg("wifi.channel") +" & echo $! > /data/data/net.batdroid/var/fixpersist.pid");
+      );	
     );
  
     getcfg("device.type") == "dream" && (
       #
-      # HTC dream/magic/tattoo/eris
+      # HTC dream/magic/tattoo/eris/hero
       #      
 	  module_loaded("wlan") || log(insmod("/system/lib/modules/wlan.ko", ""), "Loading wlan.ko module");
       file_exists("/sdcard/net.batdroid/Fw1251r1c.bin") && (
@@ -179,41 +163,10 @@ action() == "start" && (
       #
       # Bring up wifi interface
       #
-      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
                   run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
     );
 	
-	is_substring("hero", getcfg("device.type")) && (
-	  #
-	  # Removing route (gprs table) 
-	  #
-	  getcfg("device.type") == "hero1x" && 
-	    run_program("/system/bin/ip route delete table gprs");      
-      
-      module_loaded("wlan") || log(insmod("/system/lib/modules/wlan.ko", ""), "Loading wlan.ko module");
-      file_exists("/sdcard/net.batdroid/Fw1251r1c.bin") && (
- 	      log(run_program("/system/bin/wlan_loader -f /sdcard/net.batdroid/Fw1251r1c.bin -e " +
-	                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /sdcard/net.batdroid)");
-      );     
-      !file_exists("/sdcard/net.batdroid/Fw1251r1c.bin") && (
-	      file_exists("/system/etc/wifi/Fw1251r1c.bin") && (
-	      log(run_program("/system/bin/wlan_loader -f /system/etc/wifi/Fw1251r1c.bin -e " +
-	                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /system/etc/wifi)");
-	      );
-	      file_exists("/system/etc/firmware/Fw1251r1c.bin") && (
-	      log(run_program("/system/bin/wlan_loader -f /system/etc/firmware/Fw1251r1c.bin -e " +
-	                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /system/etc/firmware)");
-	      );      
-      );
-      #
-      # Bring up wifi interface
-      #
-      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
-                  run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
-    );
-
     getcfg("device.type") == "moment" && (
       #
       # Samsung Moment
@@ -233,15 +186,11 @@ action() == "start" && (
       #
       # Bring up wifi interface
       #
-      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
                   run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " mode ad-hoc"), "Setting ad-hoc mode");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " essid " + getcfg("wifi.essid")), "Setting essid");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " channel " + getcfg("wifi.channel")), "Setting channel");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " mode ad-hoc"), "Setting ad-hoc mode");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " essid " + getcfg("wifi.essid")), "Setting essid");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " channel " + getcfg("wifi.channel")), "Setting channel");
       run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " commit");
     );
 
@@ -254,15 +203,11 @@ action() == "start" && (
       #
       # Bring up wifi interface
       #
-      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
                   run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " mode ad-hoc"), "Setting ad-hoc mode");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " essid " + getcfg("wifi.essid")), "Setting essid");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " channel " + getcfg("wifi.channel")), "Setting channel");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " mode ad-hoc"), "Setting ad-hoc mode");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " essid " + getcfg("wifi.essid")), "Setting essid");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " channel " + getcfg("wifi.channel")), "Setting channel");
       run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " commit");
     );
 
@@ -275,15 +220,11 @@ action() == "start" && (
       #
       # Bring up wifi interface
       #
-      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " +
-                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+      log(run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
                   run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " mode ad-hoc"), "Setting ad-hoc mode");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " essid " + getcfg("wifi.essid")), "Setting essid");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " channel " + getcfg("wifi.channel")), "Setting channel");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " mode ad-hoc"), "Setting ad-hoc mode");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " essid " + getcfg("wifi.essid")), "Setting essid");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " channel " + getcfg("wifi.channel")), "Setting channel");
       run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " commit");
     );
   
@@ -299,18 +240,17 @@ action() == "start" && (
       #
       # Bring up wifi interface
       #
-      log(run_program("/data/data/net.batdroid/bin/ifconfig " +getcfg("wifi.interface") + " " +
-                  getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
+      log(run_program("/data/data/net.batdroid/bin/ifconfig " +getcfg("wifi.interface") + " " + getcfg("ip.gateway") + " netmask " + getcfg("ip.netmask")) &&
                   run_program("/data/data/net.batdroid/bin/ifconfig " + getcfg("wifi.interface") + " up"),  "Activating WiFi interface");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " mode ad-hoc"), "Setting ad-hoc mode");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " essid " + getcfg("wifi.essid")), "Setting essid");
-      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface")
-                      + " channel " + getcfg("wifi.channel")), "Setting channel");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " mode ad-hoc"), "Setting ad-hoc mode");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " essid " + getcfg("wifi.essid")), "Setting essid");
+      log(run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " channel " + getcfg("wifi.channel")), "Setting channel");
       
       run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") + " commit");
-      run_program("/data/data/net.batdroid/bin/iwconfig " + getcfg("wifi.interface") +" mode ad-hoc essid "+getcfg("wifi.essid")+ " persist &");
+
+      file_exists("/data/data/net.batdroid/bin/fixpersist.sh") && (
+		run_program("/data/data/net.batdroid/bin/fixpersist.sh "+ getcfg("wifi.interface") +" "+ getcfg("wifi.essid") +" "+ getcfg("wifi.channel") +" & echo $! > /data/data/net.batdroid/var/fixpersist.pid");
+      );	
     );
     
     getcfg("device.type") == "unknown" && (
@@ -344,47 +284,60 @@ action() == "start" && (
     # Set "mode"-Property
     #
     setprop("tether.mode","bt");
-###################################################################################################################
+
     #
     # Bluetooth - start pand
     #
-    #run_program("/data/data/net.batdroid/bin/pand --listen --role NAP " +
-    #            "--devup /data/data/net.batdroid/bin/blue-up.sh " +
-    #            "--devdown /data/data/net.batdroid/bin/blue-down.sh " +
-    #            "--pidfile /data/data/net.batdroid/var/pand.pid");
+    run_program("/data/data/net.batdroid/bin/pand --listen --role NAP " +
+                "--devup /data/data/net.batdroid/bin/blue-up.sh " +
+                "--devdown /data/data/net.batdroid/bin/blue-down.sh " +
+                "--pidfile /data/data/net.batdroid/var/pand.pid");
   );
 
+  #
+  # Starting route-fixer in background
+  #
+  file_exists("/data/data/net.batdroid/bin/fixroute.sh") && (
+    file_exists("/system/etc/iproute2/rt_tables") && (
+  	  file_exists("/system/bin/ip") && (
+  		getcfg("tether.mode") == "wifi" && (
+  			run_program("/data/data/net.batdroid/bin/fixroute.sh "+ getcfg("wifi.interface") +" "+ getcfg("ip.network") +"/24 "+ getcfg("ip.gateway") +" & echo $! > /data/data/net.batdroid/var/fixroute.pid");
+  		);
+  		getcfg("tether.mode") == "bt" && (
+  			run_program("/data/data/net.batdroid/bin/fixroute.sh bnep0 "+ getcfg("ip.network") +"/24 "+ getcfg("ip.gateway") +" & echo $! > /data/data/net.batdroid/var/fixroute.pid");
+  		);
+  	  );
+    );
+  );	
 
-###################################################################################################################
+
 
   #
   # Remove old rules
   #
-#  run_program("/data/data/net.batdroid/bin/iptables -N wireless-tether");
-#  run_program("/data/data/net.batdroid/bin/iptables -F wireless-tether");  
-#  run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING");
-#  run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING");
-#  run_program("/data/data/net.batdroid/bin/iptables -t nat -F");
-
+  #run_program("/data/data/net.batdroid/bin/iptables -N wireless-tether");
+  #run_program("/data/data/net.batdroid/bin/iptables -F wireless-tether");  
+  #run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING");
+  #run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING");
+  #run_program("/data/data/net.batdroid/bin/iptables -t nat -F");
 
   #
   # Bring up NAT rules
   #
-#  log(
-#    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -m state --state ESTABLISHED,RELATED -j ACCEPT") &&
-#    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -s " + getcfg("ip.network") + "/24 -j ACCEPT") &&
-#    run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -j DROP") &&
-#    run_program("/data/data/net.batdroid/bin/iptables -A FORWARD -j wireless-tether") &&
-#    run_program("/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s " +
-#               getcfg("ip.network") + "/24 -j MASQUERADE"),
-#    "Enabling NAT rules");
+  #log(
+    #run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -m state --state ESTABLISHED,RELATED -j ACCEPT") &&
+    #run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -s " + getcfg("ip.network") + "/24 -j ACCEPT") &&
+    #run_program("/data/data/net.batdroid/bin/iptables -A wireless-tether -j DROP") &&
+    #run_program("/data/data/net.batdroid/bin/iptables -A FORWARD -j wireless-tether") &&
+    #run_program("/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s " +
+    #           getcfg("ip.network") + "/24 -j MASQUERADE"),
+    #"Enabling NAT rules");
 
-
-###################################################################################################################
   #
   # IP forwarding
   #
-  #log(file_write("/proc/sys/net/ipv4/ip_forward", "1"), "Enabling IP forwarding");
+  log(file_write("/proc/sys/net/ipv4/ip_forward", "1"), "Enabling IP forwarding");
+  file_write("/proc/sys/net/ipv4/conf/all/rp_filter", "0");
 
   #
   # dnsmasq for wifi tether (bluetooth has pand start it)
@@ -394,24 +347,19 @@ action() == "start" && (
   #                "--resolv-file=/data/data/net.batdroid/conf/resolv.conf " +
   #                "--conf-file=/data/data/net.batdroid/conf/dnsmasq.conf");
 
-
-###################################################################################################################
-
-
-###################################################################################################################
   #
   # Access control
   #
-#  file_exists("/data/data/net.batdroid/conf/whitelist_mac.conf") &&
-#    log(
-#      run_program("/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -s " + getcfg("ip.network") + "/24 -j DROP") &&
-#      whitelist_macs("/data/data/net.batdroid/conf/whitelist_mac.conf"),
-#    "Enabling access control."
-#    );
-#  log("Tethe##########################################################################################ring now running");
-);
+  #file_exists("/data/data/net.batdroid/conf/whitelist_mac.conf") &&
+  #  log(
+  #    run_program("/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -s " + getcfg("ip.network") + "/24 -j DROP") &&
+  #    whitelist_macs("/data/data/net.batdroid/conf/whitelist_mac.conf"),
+  #  "Enabling access control."
+  #  );
 
-###################################################################################################################
+
+  log("Tethering now running");
+);
 
 #
 # Actions when stopping tether
@@ -422,20 +370,18 @@ action() == "stop" && (
   #
   setprop("tether.status","stopped");
 
-
-###################################################################################################################
   #
   # Bluetooth, kill pand and and dnsmasq processes
   #
-#  getcfg("tether.mode") == "bt" && (
-#    run_program("/data/data/net.batdroid/bin/pand -K");
-#    sleep("1");
-#    kill_process("pand");
-#    file_unlink("/data/data/net.batdroid/var/pand.pid");
-#    kill_process("dnsmasq");
-  );
-
-###################################################################################################################
+  #getcfg("tether.mode") == "bt" && (
+  #  run_program("/data/data/net.batdroid/bin/pand -K");
+  #  sleep("1");
+  #  kill_process("pand");
+  #  file_unlink("/data/data/net.batdroid/var/pand.pid");
+  #  kill_process("dnsmasq");
+  #  kill_pidfile("/data/data/net.batdroid/var/fixroute.pid");
+  #  file_unlink("/data/data/net.batdroid/var/fixroute.pid");
+  #);
   
   #
   # Wifi mode, bring interface down, kill dnsmasq/wpa_supplicant, remove module.
@@ -443,8 +389,12 @@ action() == "stop" && (
   getcfg("tether.mode") == "wifi" && (
     run_program("/data/data/net.batdroid/bin/ifconfig " +  getcfg("wifi.interface") + " down");
     kill_process("wpa_supplicant");
-    kill_process("dnsmasq");
-	kill_process("iwconfig");
+    #kill_process("dnsmasq");
+    kill_process("iwconfig");
+	  kill_pidfile("/data/data/net.batdroid/var/fixpersist.pid");
+	  kill_pidfile("/data/data/net.batdroid/var/fixroute.pid");
+	  file_unlink("/data/data/net.batdroid/var/fixpersist.pid");
+	  file_unlink("/data/data/net.batdroid/var/fixroute.pid");
     module_loaded("bcm4329") && rmmod("bcm4329");
     module_loaded("bcm4325") && rmmod("bcm4325");
     module_loaded("wlan") && rmmod("wlan");
@@ -456,67 +406,68 @@ action() == "stop" && (
   #
   # Remove old dnsmasq.leases and pid-file
   #
-  file_exists("/data/data/net.batdroid/var/dnsmasq.leases") && (
-  	file_unlink("/data/data/net.batdroid/var/dnsmasq.leases");
-  );
-  file_exists("/data/data/net.batdroid/var/dnsmasq.pid") && (
-    file_unlink("/data/data/net.batdroid/var/dnsmasq.pid");
-  );
-  file_exists("/data/data/net.batdroid/var/setssid.pid") && (
-    file_unlink("/data/data/net.batdroid/var/setssid.pid");
-  );
+  #file_exists("/data/data/net.batdroid/var/dnsmasq.leases") && (
+  # 	file_unlink("/data/data/net.batdroid/var/dnsmasq.leases");
+  #);
+  #file_exists("/data/data/net.batdroid/var/dnsmasq.pid") && (
+  #  file_unlink("/data/data/net.batdroid/var/dnsmasq.pid");
+  #);
+  #file_exists("/data/data/net.batdroid/var/setssid.pid") && (
+  #  file_unlink("/data/data/net.batdroid/var/setssid.pid");
+  #);
 
-
-
-##########################################################################################
   #
   # Disable forwarding and remove NAT rules.
   #
- # log(file_write("/proc/sys/net/ipv4/ip_forward", "0"), "Disabling forwarding");
- # log(
- #   run_program("/data/data/net.batdroid/bin/iptables -D FORWARD -j wireless-tether") &&
- #   run_program("/data/data/net.batdroid/bin/iptables -F wireless-tether") &&  
- #   run_program("/data/data/net.batdroid/bin/iptables -X wireless-tether") && 
- #   run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING") &&
- #   run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING") &&
- #   run_program("/data/data/net.batdroid/bin/iptables -t nat -F"),
- # "Disabling NAT rules");
-
- # log("Tethering now stopped");
+  log(file_write("/proc/sys/net/ipv4/ip_forward", "0"), "Disabling forwarding");
+  getcfg("system.rp_filter") == "1" && (
+  	file_write("/proc/sys/net/ipv4/conf/all/rp_filter", "1");
+  );
   
-#);
+  #log(
+    #run_program("/data/data/net.batdroid/bin/iptables -D FORWARD -j wireless-tether") &&
+    #run_program("/data/data/net.batdroid/bin/iptables -F wireless-tether") &&  
+    #run_program("/data/data/net.batdroid/bin/iptables -X wireless-tether") && 
+    #run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING") &&
+    #run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING") &&
+    #run_program("/data/data/net.batdroid/bin/iptables -t nat -F"),
+    #"Disabling NAT rules");
 
-##########################################################################################
+  log("Tethering now stopped");
+  
+);
 
 #
 # Actions when restarting access control
 #
-#action() == "restartsecwifi" && (
+action() == "restartsecwifi" && (
+
   #
   # Remove old rules
   #
-#  log (
-#    run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING") &&
-#    run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING"),
-#  "Disabling NAT rules");
+  #log (
+    #run_program("/data/data/net.batdroid/bin/iptables -t nat -F PREROUTING") &&
+    #run_program("/data/data/net.batdroid/bin/iptables -t nat -F POSTROUTING"),
+  #"Disabling NAT rules");
 
   #
   # Bring up NAT rules
   #
-#  log(
-#    run_program("/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s " +
-#               getcfg("ip.network") + "/24 -j MASQUERADE"),
-#    "Enabling NAT rules");
+  #log(
+  #  run_program("/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s " +
+  #             getcfg("ip.network") + "/24 -j MASQUERADE"),
+  #  "Enabling NAT rules");
 
-
-###################################################################################################################
   #
   # Access control
   #
-#  file_exists("/data/data/net.batdroid/conf/whitelist_mac.conf") &&
-#    log(
-#     run_program("/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -s " + getcfg("ip.network") + "/24 -j DROP") &&
-#     whitelist_macs("/data/data/net.batdroid/conf/whitelist_mac.conf"),
-#   "Enabling access control."
-#    );
-#);
+  #file_exists("/data/data/net.batdroid/conf/whitelist_mac.conf") &&
+  #  log(
+  #    run_program("/data/data/net.batdroid/bin/iptables -t nat -I PREROUTING -s " + getcfg("ip.network") + "/24 -j DROP") &&
+  #    whitelist_macs("/data/data/net.batdroid/conf/whitelist_mac.conf"),
+  #  "Enabling access control."
+  #  );
+
+  log("Restarted access control");
+
+);
