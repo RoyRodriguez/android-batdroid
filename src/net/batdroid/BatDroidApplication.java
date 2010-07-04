@@ -49,9 +49,10 @@ public class BatDroidApplication extends Application {
 
 	public static final String MSG_TAG = "BATDROID -> BatDroidApplication";
 	
-	public final String DEFAULT_PASSPHRASE = "abcdefghijklm";
+	public final String DEFAULT_PASSPHRASE = "abcdefghijklmnopqrs";
 	public final String DEFAULT_LANNETWORK = "10.0.0.0/8";
 	public final String DEFAULT_ENCSETUP   = "wpa_supplicant";
+	public final String DEFAULT_LANADDRESS = "10.0.0.254";
 	
 	// Devices-Information
 	public String deviceType = "unknown"; 
@@ -184,6 +185,7 @@ public class BatDroidApplication extends Application {
     String lannetwork = this.settings.getString("lannetworkpref", DEFAULT_LANNETWORK);
     String wepkey = this.settings.getString("passphrasepref", DEFAULT_PASSPHRASE);
     String wepsetupMethod = this.settings.getString("encsetuppref", DEFAULT_ENCSETUP);
+	String ippref = this.settings.getString("ippref", DEFAULT_LANADDRESS);
         
 		// adhoc.conf
         String subnet = lannetwork.substring(0, lannetwork.lastIndexOf("."));
@@ -191,7 +193,7 @@ public class BatDroidApplication extends Application {
 		this.adhoccfg.put("device.type", deviceType);
         this.adhoccfg.put("wifi.essid", ssid);
 		this.adhoccfg.put("ip.network", lannetwork.split("/")[0]);
-		this.adhoccfg.put("ip.gateway", subnet + ".254");    
+		this.adhoccfg.put("ip.gateway", ippref);    
 		
 		// Checking if rp_filter is active
 		if (this.coretask.isRPFilterEnabled()) {
