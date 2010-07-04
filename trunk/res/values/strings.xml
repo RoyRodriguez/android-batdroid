@@ -7,8 +7,8 @@
     <string name="main_activity_temperatureunit">°C</string>
     <string name="main_activity_accesscontrol">Access Control</string>
     <string name="log_activity_nologfile">Unable to open log-File. File does not exist!</string>
-    <string name="main_layout_presstostart">- Press to start tethering. -</string> 
-    <string name="main_layout_presstostop">- Press to stop tethering. -</string> 
+    <string name="main_layout_presstostart">- Press to start B.A.T.M.A.N. -</string> 
+    <string name="main_layout_presstostop">- Press to stop B.A.T.M.A.N. -</string> 
     <string name="accesscontrol_activity_reloadclientlist">Reload Client-List</string>
     <string name="accesscontrol_activity_applysettings">Apply Settings</string>
     <string name="accesscontrol_layout_connectedclients">Connected/Authorized Clients:</string>
@@ -66,7 +66,7 @@
         <string name="setup_layout_updatecheck">Disable Update-Check</string>
         <string name="setup_layout_updatecheck_summary">Turn off update-check at startup</string>
         <string name="setup_layout_wakelock">Disable Wake-Lock</string>
-        <string name="setup_layout_wakelock_summary">Turn off wake-lock while tethering</string>
+        <string name="setup_layout_wakelock_summary">Turn off wake-lock while B.A.T.M.A.N. is running</string>
         <string name="setup_layout_battery">Disable Battery-Temperature</string>
         <string name="setup_layout_battery_summary">Hide battery-temperatur info</string>
         <string name="about_layout_version">Version:</string>
@@ -83,9 +83,9 @@
         <string name="donate_layout_line3">If you want to donate later, you can do so from the \'About\' dialog.</string>
         <string name="donate_layout_line4">Thank you!</string>
         <string name="noaccesscontrol_layout_line1">Sorry, but your kernel does not have all necessary features for the Access Control feature of this application. Access Control will be disabled.</string>
-        <string name="noaccesscontrol_layout_line2">Please see our FAQ: http://code.google.com/p/android-wifi-tether/wiki/FAQ</string>
+        <string name="noaccesscontrol_layout_line2">Please see our FAQ: http://code.google.com/p/android-batdroid/wiki/FAQ</string>
         <string name="nonetfilter_layout_line1">Sorry, but your kernel does not have all necessary features for running this application.</string>
-        <string name="nonetfilter_layout_line2">Please see our FAQ: http://code.google.com/p/android-wifi-tether/wiki/FAQ</string>
+        <string name="nonetfilter_layout_line2">Please see our FAQ: http://code.google.com/p/android-batdroid/wiki/FAQ</string>
         <string name="noroot_layout_line1">Sorry, but your kernel does not have all necessary features for running this application.</string>
         <string name="update_layout_line1">There is an update available!</string>
         <string name="update_layout_line2">Do you want to install this update now?</string>

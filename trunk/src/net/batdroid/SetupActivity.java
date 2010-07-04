@@ -45,7 +45,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
        
         private ProgressDialog progressDialog;
        
-        public static final String MSG_TAG = "TETHER -> SetupActivity";
+        public static final String MSG_TAG = "BATDROID -> SetupActivity";
 
     private String currentSSID;
     private String currentChannel;
@@ -147,7 +147,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
     protected Dialog onCreateDialog(int id) {
         if (id == ID_DIALOG_RESTARTING) {
                 progressDialog = new ProgressDialog(this);
-                progressDialog.setTitle("Restart Tethering");
+                progressDialog.setTitle("Restart B.A.T.M.A.N.");
                 progressDialog.setMessage("Please wait while restarting...");
                 progressDialog.setIndeterminate(false);
                 progressDialog.setCancelable(true);
@@ -203,7 +203,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 }
                                         }
                                         catch (Exception ex) {
-                                                message = "Unable to restart tethering!";
+                                                message = "Unable to restart B.A.T.M.A.N!";
                                         }
                                         // Send Message
                                         Message msg = new Message();
@@ -227,7 +227,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 }
                                         }
                                         catch (Exception ex) {
-                                                message = "Unable to restart tethering!";
+                                                message = "Unable to restart B.A.T.M.A.N!";
                                         }
                                         // Send Message
                                         Message msg = new Message();
@@ -251,7 +251,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 }
                                         }
                                         catch (Exception ex) {
-                                                message = "Unable to restart tethering!";
+                                                message = "Unable to restart B.A.T.M.A.N.!";
                                         }
                                         // Send Message
                                         Message msg = new Message();
@@ -275,7 +275,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 }
                                         }
                                         catch (Exception ex) {
-                                                message = "Unable to restart tethering!";
+                                                message = "Unable to restart B.A.T.M.A.N.!";
                                         }
                                         // Send Message
                                         Message msg = new Message();
