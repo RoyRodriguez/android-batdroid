@@ -29,6 +29,8 @@ import java.util.Hashtable;
 
 import android.util.Log;
 
+import android.tether.system.NativeTask;
+
 public class CoreTask {
 
 	public static final String MSG_TAG = "TETHER -> CoreTask";
