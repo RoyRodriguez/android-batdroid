@@ -47,7 +47,7 @@
 #define ADDR_STR_LEN 16
 #define TQ_MAX_VALUE 255
 
-#define UNIX_PATH "/data/data/net.open-mesh.batman/batmand.socket"
+#define UNIX_PATH "/data/data/net.batdroid/var/batmand.socket"
 
 
 

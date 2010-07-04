@@ -9,7 +9,7 @@ wifi.channel=5
 wifi.encryption.key=none
 device.type=dream
 wifi.encryption=open
-ip.gateway=10.0.0.4
+ip.gateway=10.0.0.23
 tether.mode=wifi
 
 
