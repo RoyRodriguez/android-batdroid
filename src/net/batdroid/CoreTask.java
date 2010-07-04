@@ -465,7 +465,7 @@ public class CoreTask {
     	}
     	writesuccess = writeLinesToFile(filename, fileString);
     	if (writesuccess == false) {
-    		Log.e(MSG_TAG, "Unable to update bin/tether with new lan-configuration.");
+    		Log.e(MSG_TAG, "Unable to update bin/adhoc with new lan-configuration.");
     		return writesuccess;
     	}
     	

@@ -41,7 +41,7 @@ import android.content.IntentFilter;
 public class batdroid extends Activity implements OnClickListener
 {
   public static final String MSG_TAG = "BATDROID -> MainActivity";
-	public boolean tether_on = false;
+	public boolean batman_on = false;
 	private	ImageView button_start = null;
 	private	ImageView button_stop = null;
   private TableRow startTblRow = null;
@@ -60,11 +60,11 @@ public class batdroid extends Activity implements OnClickListener
       this.application = (BatDroidApplication)this.getApplication();
 
       // Capture our button from layout
-    	button_start = (ImageView)findViewById(R.id.startTetherBtn);
+    	button_start = (ImageView)findViewById(R.id.startBatmanBtn);
     	// Register the onClick listener with the implementation above
     	button_start.setOnClickListener(this);
       // Capture our button from layout
-    	button_stop = (ImageView)findViewById(R.id.stopTetherBtn);
+    	button_stop = (ImageView)findViewById(R.id.stopBatmanBtn);
     	// Register the onClick listener with the implementation above
     	button_stop.setOnClickListener(this);
       
@@ -96,18 +96,18 @@ public class batdroid extends Activity implements OnClickListener
     
     	int id = v.getId();
     	switch(id){
-    		case R.id.startTetherBtn:{
+    		case R.id.startBatmanBtn:{
                         Log.d(MSG_TAG, "StartBtn pressed ...");
     			TextView test = (TextView)findViewById(R.id.text_start);
-		    	test.setText("Processed event to start tether.");
-			tether_on = true;
+		    	test.setText("Processed event to start B.A.T.M.A.N..");
+			batman_on = true;
 			toggleStartStop();	
     		}break;
-    		case R.id.stopTetherBtn:{
+    		case R.id.stopBatmanBtn:{
                         Log.d(MSG_TAG, "StopBtn pressed ...");
     			TextView test = (TextView)findViewById(R.id.text_start);
-		    	test.setText("Processed event to stop tether.");
-			tether_on = false;
+		    	test.setText("Processed event to stop B.A.T.M.A.N.");
+			batman_on = false;
 			toggleStartStop();	
     		}break;
     		default:{
@@ -119,12 +119,12 @@ public class batdroid extends Activity implements OnClickListener
 
    private void toggleStartStop() {
 
-		if(tether_on==false)
-		{//the tether is off
+		if(batman_on==false)
+		{//the Batman is off
 			this.startTblRow.setVisibility(View.VISIBLE);
 			this.stopTblRow.setVisibility(View.GONE);
-		}else if(tether_on==true)
-		{//the tether is on
+		}else if(batman_on==true)
+		{//the Batman is on
 			this.startTblRow.setVisibility(View.GONE);
 			this.stopTblRow.setVisibility(View.VISIBLE);		
 		}
