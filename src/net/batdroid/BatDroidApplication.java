@@ -34,8 +34,8 @@ public class BatDroidApplication extends Application {
   public CoreTask.WpaSupplicant wpasupplicant = null;
   // TiWlan.conf
   public CoreTask.TiWlanConf tiwlan = null;
-  // tether.conf
-  public CoreTask.TetherConfig tethercfg = null;
+  // adhoc.conf
+  public CoreTask.AdHocConfig adhoccfg = null;
         
   // CoreTask
   public CoreTask coretask = null;
@@ -71,9 +71,9 @@ public class BatDroidApplication extends Application {
     // tiwlan.conf
     this.tiwlan = this.coretask.new TiWlanConf();
         
-    // tether.cfg
-    this.tethercfg = this.coretask.new TetherConfig();
-    this.tethercfg.read();
+    // adhoc.cfg
+    this.adhoccfg = this.coretask.new AdHocConfig();
+    this.adhoccfg.read();
 
     // Powermanagement
     // TODO powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -89,15 +89,15 @@ public class BatDroidApplication extends Application {
 
   @Override public void onTerminate() {
     Log.d(MSG_TAG, "Calling onTerminate()");
-    // Stopping Tether
-    // TODO this.stopTether();
+    // Stopping AdHoc
+    // TODO this.stopAdHoc();
     // Remove all notifications
     // TODO this.notificationManager.cancelAll();
   }
 
   public boolean binariesExists() {
     // TODO
-    File file = new File(this.coretask.DATA_FILE_PATH+"/bin/tether");
+    File file = new File(this.coretask.DATA_FILE_PATH+"/bin/adhoc");
     return file.exists();
   }
 
@@ -121,12 +121,12 @@ public class BatDroidApplication extends Application {
 
 	  //Batmand binarie,  "batmand-rv1543_armv6l" renamed to "batmand"
 	 if (message == null) {
-            BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/batmand", "0755", 	R.raw.tether_conf);
+            BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/batmand", "0755", 	R.raw.batmand);
           }
 
-          // tether
+          // adhoc
           if (message == null) {
-            message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/tether", "0755", R.raw.tether);
+            message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/adhoc", "0755", R.raw.adhoc);
           }
           // iptables
           if (message == null) {
@@ -168,11 +168,11 @@ public class BatDroidApplication extends Application {
           }
           // edify script
           if (message == null) {
-            BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/tether.edify", "0644", R.raw.tether_edify);
+            BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/adhoc.edify", "0644", R.raw.adhoc_edify);
           }
-          // tether.cfg
+          // adhoc.cfg
           if (message == null) {
-            BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/tether.conf", "0644", R.raw.tether_conf);
+            BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/adhoc.conf", "0644", R.raw.adhoc_conf);
           }
 
                                
