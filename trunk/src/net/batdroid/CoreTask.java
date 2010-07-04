@@ -151,12 +151,12 @@ public class CoreTask {
 	    }
 	}
 	
-	public class TetherConfig extends HashMap<String, String> {
+	public class AdHocConfig extends HashMap<String, String> {
 
 		private static final long serialVersionUID = 1L;
 		
 		public HashMap<String, String> read() {
-			String filename = DATA_FILE_PATH + "/conf/tether.conf";
+			String filename = DATA_FILE_PATH + "/conf/adhoc.conf";
 			this.clear();
 			for (String line : readLinesFromFile(filename)) {
 				if (line.startsWith("#"))
@@ -179,7 +179,7 @@ public class CoreTask {
 			for (String key : this.keySet()) {
 				lines += key + "=" + this.get(key) + "\n";
 			}
-			return writeLinesToFile(DATA_FILE_PATH + "/conf/tether.conf", lines);
+			return writeLinesToFile(DATA_FILE_PATH + "/conf/adhoc.conf", lines);
 		}
 	}
         
@@ -409,11 +409,11 @@ public class CoreTask {
     public boolean filesetOutdated(){
     	boolean outdated = true;
     	
-    	File inFile = new File(this.DATA_FILE_PATH+"/conf/tether.edify");
+    	File inFile = new File(this.DATA_FILE_PATH+"/conf/adhoc.edify");
     	if (inFile.exists() == false) {
     		return false;
     	}
-    	ArrayList<String> lines = readLinesFromFile(this.DATA_FILE_PATH+"/conf/tether.edify");
+    	ArrayList<String> lines = readLinesFromFile(this.DATA_FILE_PATH+"/conf/adhoc.edify");
 
     	int linecount = 0;
     	for (String line : lines) {
@@ -454,7 +454,7 @@ public class CoreTask {
     	String iprange = lanparts[0]+"."+lanparts[1]+"."+lanparts[2]+".100,"+lanparts[0]+"."+lanparts[1]+"."+lanparts[2]+".105,12h";
     	
     	// Update bin/blue_up.sh
-    	fileString = "";
+      /*    	fileString = "";
     	filename = this.DATA_FILE_PATH+"/bin/blue-up.sh";
     	inputLines = readLinesFromFile(filename);   
     	for (String line : inputLines) {
@@ -484,8 +484,9 @@ public class CoreTask {
     	if (writesuccess == false) {
     		Log.e(MSG_TAG, "Unable to update conf/dnsmasq.conf with new lan-configuration.");
     		return writesuccess;
-    	}    	
-    	return writesuccess;
+        }    	
+        return writesuccess;*/
+      return true;
     }
     
     private String reassembleLine(String source, String splitPattern, String prefix, String target) {
