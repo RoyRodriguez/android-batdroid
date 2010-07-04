@@ -21,6 +21,7 @@ import android.content.pm.PackageInfo;
 public class BatDroidApplication extends Application {
 
   public static final String MSG_TAG = "BATDROID -> BatDroidApplication";
+  public final String DEFAULT_LANNETWORK = "10.0.0.0/8";
 
   // StartUp-Check perfomed
   public boolean startupCheckPerformed = false;
@@ -270,6 +271,17 @@ public class BatDroidApplication extends Application {
     }
     return version;
   }
+    /* THIS NEEDS TO BE IMPLEMENTED
+     * This method checks if changing the transmit-power is supported
+     */
+    public boolean isTransmitPowerSupported() {
+        // Only supported for the nexusone
+//        if (this.deviceType.equals(Configuration.DEVICE_NEXUSONE)
+  //                      && this.interfaceDriver.startsWith("softap") == false) {
+   //             return true;
+    //    }
+        return true;
+    }  
 
 }
 

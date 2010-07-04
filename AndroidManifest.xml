@@ -3,13 +3,14 @@
       package="net.batdroid"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:name="BatDroidApplication" android:label="@string/app_name">
+    <application android:name="BatDroidApplication" android:label="@string/global_application_name">
         <activity android:name=".batdroid"
-                  android:label="@string/app_name">
+                  android:label="@string/global_application_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+	<activity android:name=".SetupActivity" android:launchMode="singleTask"/>
+   </application>
 </manifest> 
