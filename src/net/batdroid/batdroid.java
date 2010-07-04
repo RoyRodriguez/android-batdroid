@@ -160,6 +160,7 @@ public class batdroid extends Activity implements OnClickListener
 
 
   private void openNotRootDialog() {
+    /* TODO - uncomment
     LayoutInflater li = LayoutInflater.from(this);
     View view = li.inflate(R.layout.norootview, null); 
     new AlertDialog.Builder(batdroid.this)
@@ -178,7 +179,7 @@ public class batdroid extends Activity implements OnClickListener
             batdroid.this.application.displayToastMessage("Ignoring, note that this application will NOT work correctly.");
           }
         })
-      .show();
+      .show();*/
   }
 
 

@@ -77,9 +77,6 @@ public class BatDroidApplication extends Application {
 	private PowerManager powerManager = null;
 	private PowerManager.WakeLock wakeLock = null;
 
-	// Bluetooth
-	BluetoothService bluetoothService = null;
-	
 	// DNS-Server-Update Thread
 	private Thread dnsUpdateThread = null;	
 	
@@ -98,17 +95,7 @@ public class BatDroidApplication extends Application {
     
 	// Original States
 	private static boolean origWifiState = false;
-	private static boolean origBluetoothState = false;
 	
-	// Client
-	ArrayList<ClientData> clientDataAddList = new ArrayList<ClientData>();
-	ArrayList<String> clientMacRemoveList = new ArrayList<String>();
-	
-	// Access-control
-	boolean accessControlSupported = true;
-	
-	// Whitelist
-	public CoreTask.Whitelist whitelist = null;
 	// Supplicant
 	public CoreTask.WpaSupplicant wpasupplicant = null;
 	// TiWlan.conf
@@ -136,8 +123,8 @@ public class BatDroidApplication extends Application {
 		this.coretask.setPath(this.getApplicationContext().getFilesDir().getParent());
 		Log.d(MSG_TAG, "Current directory is "+this.getApplicationContext().getFilesDir().getParent());
 
-		//create WebserviceTask
-		this.webserviceTask = new WebserviceTask();
+		// TODO - updates create WebserviceTask
+		//this.webserviceTask = new WebserviceTask();
 		
         // Check Homedir, or create it
         this.checkDirs(); 
@@ -155,9 +142,6 @@ public class BatDroidApplication extends Application {
         // init wifiManager
         wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE); 
         
-        // Whitelist
-        this.whitelist = this.coretask.new Whitelist();
-        
         // Supplicant config
         this.wpasupplicant = this.coretask.new WpaSupplicant();
         
@@ -165,7 +149,7 @@ public class BatDroidApplication extends Application {
         this.tiwlan = this.coretask.new TiWlanConf();
         
         // adhoc.cfg
-        this.adhoccfg = this.coretask.new AdhocConfig();
+        this.adhoccfg = this.coretask.new AdHocConfig();
         this.adhoccfg.read();
 
         // Powermanagement
@@ -175,8 +159,8 @@ public class BatDroidApplication extends Application {
         // init notificationManager
         this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
     	this.notification = new Notification(R.drawable.start_notification, "BatDroid", System.currentTimeMillis());
-    	this.mainIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
-    	this.accessControlIntent = PendingIntent.getActivity(this, 1, new Intent(this, AccessControlActivity.class), 0);
+    	this.mainIntent = PendingIntent.getActivity(this, 0, new Intent(this, batdroid.class), 0);
+
 	}
 
 	@Override
@@ -188,62 +172,18 @@ public class BatDroidApplication extends Application {
 		this.notificationManager.cancelAll();
 	}
 	
-	// ClientDataList Add
-	public synchronized void addClientData(ClientData clientData) {
-		this.clientDataAddList.add(clientData);
-	}
-
-	public synchronized void removeClientMac(String mac) {
-		this.clientMacRemoveList.add(mac);
-	}
-	
-	public synchronized ArrayList<ClientData> getClientDataAddList() {
-		ArrayList<ClientData> tmp = this.clientDataAddList;
-		this.clientDataAddList = new ArrayList<ClientData>();
-		return tmp;
-	}
-	
-	public synchronized ArrayList<String> getClientMacRemoveList() {
-		ArrayList<String> tmp = this.clientMacRemoveList;
-		this.clientMacRemoveList = new ArrayList<String>();
-		return tmp;
-	}	
-	
-	public synchronized void resetClientMacLists() {
-		this.clientDataAddList = new ArrayList<ClientData>();
-		this.clientMacRemoveList = new ArrayList<String>();
-	}
-	
-	public boolean setBluetoothState(boolean enabled) {
-		boolean connected = false;
-		if (enabled == false) {
-			this.bluetoothService.stopBluetooth();
-			return false;
-		}
-		origBluetoothState = this.bluetoothService.isBluetoothEnabled();
-		if (origBluetoothState == false) {
-			connected = this.bluetoothService.startBluetooth();
-			if (connected == false) {
-				Log.d(MSG_TAG, "Enable bluetooth failed");
-			}
-		} else {
-			connected = true;
-		}
-		return connected;
-	}
 	
 	public void updateConfiguration() {
 		
 		long startStamp = System.currentTimeMillis();
 		
-        boolean bluetoothPref = this.settings.getBoolean("bluetoothon", false);
 		boolean encEnabled = this.settings.getBoolean("encpref", false);
 		boolean acEnabled = this.settings.getBoolean("acpref", false);
 		String ssid = this.settings.getString("ssidpref", "batdroid");
-        String txpower = this.settings.getString("txpowerpref", "disabled");
-        String lannetwork = this.settings.getString("lannetworkpref", DEFAULT_LANNETWORK);
-        String wepkey = this.settings.getString("passphrasepref", DEFAULT_PASSPHRASE);
-        String wepsetupMethod = this.settings.getString("encsetuppref", DEFAULT_ENCSETUP);
+    String txpower = this.settings.getString("txpowerpref", "disabled");
+    String lannetwork = this.settings.getString("lannetworkpref", DEFAULT_LANNETWORK);
+    String wepkey = this.settings.getString("passphrasepref", DEFAULT_PASSPHRASE);
+    String wepsetupMethod = this.settings.getString("encsetuppref", DEFAULT_ENCSETUP);
         
 		// adhoc.conf
         String subnet = lannetwork.substring(0, lannetwork.lastIndexOf("."));
@@ -290,35 +230,6 @@ public class BatDroidApplication extends Application {
 			Log.e(MSG_TAG, "Unable to update adhoc.conf!");
 		}
 		
-		// dnsmasq.conf
-		this.dnsmasqcfg.set(lannetwork);
-		if (this.dnsmasqcfg.write() == false) {
-			Log.e(MSG_TAG, "Unable to update dnsmasq.conf!");
-		}
-		
-		// blue-up.sh
-		this.btcfg.set(lannetwork);
-		if (this.btcfg.write() == false) {
-			Log.e(MSG_TAG, "Unable to update blue-up.sh!");
-		}
-		
-		// whitelist
-		if (acEnabled) {
-			if (this.whitelist.exists() == false) {
-				try {
-					this.whitelist.touch();
-				} catch (IOException e) {
-					Log.e(MSG_TAG, "Unable to update whitelist-file!");
-					e.printStackTrace();
-				}
-			}
-		}
-		else {
-			if (this.whitelist.exists()) {
-				this.whitelist.remove();
-			}
-		}
-		
 		/*
 		 * TODO
 		 * Need to find a better method to identify if the used device is a
@@ -337,101 +248,60 @@ public class BatDroidApplication extends Application {
 	// Start/Stop BatDroid
     public boolean startBatDroid() {
 
-        boolean bluetoothPref = this.settings.getBoolean("bluetoothon", false);
-        boolean bluetoothWifi = this.settings.getBoolean("bluetoothkeepwifi", false);
-        
-        // Updating all configs
-        this.updateConfiguration();
-
-        if (bluetoothPref) {
-    		if (setBluetoothState(true) == false){
-    			return false;
-    		}
-			if (bluetoothWifi == false) {
-	        	this.disableWifi();
-			}
-        } 
-        else {
-        	this.disableWifi();
-        }
-
-        // Update resolv.conf-file
-        String dns[] = this.coretask.updateResolvConf();     
-        
+      // Updating all configs
+      this.updateConfiguration();
+      
+      this.disableWifi();
+      
+      // Update resolv.conf-file
+      String dns[] = this.coretask.updateResolvConf();     
+      
     	// Starting service
     	if (this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc start 1")) {
-        	
-        	this.clientConnectEnable(true);
+        
+        //this.clientConnectEnable(true);
     		this.trafficCounterEnable(true);
     		this.dnsUpdateEnable(dns, true);
-        	
-			// Acquire Wakelock
-			this.acquireWakeLock();
-			
+        
+        // Acquire Wakelock
+        this.acquireWakeLock();
+        
     		return true;
     	}
     	return false;
     }
     
-    public boolean stopBatdroid() {
+  public boolean stopBatDroid() {
 		// Diaabling polling-threads
-    	this.trafficCounterEnable(false);
+    this.trafficCounterEnable(false);
 		this.dnsUpdateEnable(false);
-		this.clientConnectEnable(false);
-    	
-    	this.releaseWakeLock();
-
-        boolean bluetoothPref = this.settings.getBoolean("bluetoothon", false);
-        boolean bluetoothWifi = this.settings.getBoolean("bluetoothkeepwifi", false);
-        
-    	boolean stopped = this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc stop 1");
+		//this.clientConnectEnable(false);    
+    this.releaseWakeLock();
+    boolean stopped = this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc stop 1");
 		this.notificationManager.cancelAll();
-		
-		// Put WiFi and Bluetooth back, if applicable.
-		if (bluetoothPref && origBluetoothState == false) {
-			setBluetoothState(false);
-		}
-		if (bluetoothPref == false || bluetoothWifi == false) {
-			this.enableWifi();
-		}
+    this.enableWifi();
 		return stopped;
-    }
+  }
 	
-    public boolean restartBatdroid() {
-    	boolean status = this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc stop 1");
+  public boolean restartBatDroid() {
+    boolean status = this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc stop 1");
 		this.notificationManager.cancelAll();
-    	this.trafficCounterEnable(false);
-    	
-        boolean bluetoothPref = this.settings.getBoolean("bluetoothon", false);
-        boolean bluetoothWifi = this.settings.getBoolean("bluetoothkeepwifi", false);
+    this.trafficCounterEnable(false);
 
-        // Updating all configs
-        this.updateConfiguration();       
+    // Updating all configs
+    this.updateConfiguration();       
+    
+    this.disableWifi();
+    
+    // Starting service
+    if (status == true)
+      status = this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc start 1");
         
-        if (bluetoothPref) {
-    		if (setBluetoothState(true) == false){
-    			return false;
-    		}
-			if (bluetoothWifi == false) {
-	        	this.disableWifi();
-			}
-        } 
-        else {
-        	if (origBluetoothState == false) {
-        		setBluetoothState(false);
-        	}
-        	this.disableWifi();
-        }
-        
-    	// Starting service
-        if (status == true)
-        	status = this.coretask.runRootCommand(this.coretask.DATA_FILE_PATH+"/bin/adhoc start 1");
-        
-        this.showStartNotification();
-        this.trafficCounterEnable(true);
-        
-    	return status;
-    }
+    this.showStartNotification();
+    this.trafficCounterEnable(true);
+    
+    return status;
+  }
     
     public String getAdhocNetworkDevice() {
 			/**
@@ -528,47 +398,6 @@ public class BatDroidApplication extends Application {
     	this.notificationManager.notify(-1, this.notification);
     }
     
-    Handler clientConnectHandler = new Handler() {
- 	   public void handleMessage(Message msg) {
- 		    ClientData clientData = (ClientData)msg.obj;
- 		   BatDroidApplication.this.showClientConnectNotification(clientData, msg.what);
- 	   }
-    };
-    
-    public void showClientConnectNotification(ClientData clientData, int authType) {
-    	int notificationIcon = R.drawable.secmedium;
-    	String notificationString = "";
-    	switch (authType) {
-	    	case CLIENT_CONNECT_ACDISABLED :
-	    		notificationIcon = R.drawable.secmedium;
-	    		notificationString = "AC disabled";
-	    		break;
-	    	case CLIENT_CONNECT_AUTHORIZED :
-	    		notificationIcon = R.drawable.sechigh;
-	    		notificationString = "Authorized";
-	    		break;
-	    	case CLIENT_CONNECT_NOTAUTHORIZED :
-	    		notificationIcon = R.drawable.seclow;
-	    		notificationString = "Unauthorized";
-    	}
-		Log.d(MSG_TAG, "New (" + notificationString + ") client connected ==> "+clientData.getClientName()+" - "+clientData.getMacAddress());
- 	   	Notification clientConnectNotification = new Notification(notificationIcon, "BatDroid", System.currentTimeMillis());
- 	   	clientConnectNotification.tickerText = clientData.getClientName()+" ("+clientData.getMacAddress()+")";
- 	   	if (!this.settings.getString("notifyring", "").equals(""))
- 	   		clientConnectNotification.sound = Uri.parse(this.settings.getString("notifyring", ""));
-
- 	   	if(this.settings.getBoolean("notifyvibrate", true))
- 	   		clientConnectNotification.vibrate = new long[] {100, 200, 100, 200};
-
- 	   	if (this.accessControlSupported) 
- 	   		clientConnectNotification.setLatestEventInfo(this, "BatDroid - " + notificationString, clientData.getClientName()+" ("+clientData.getMacAddress()+") connected ...", this.accessControlIntent);
- 	   	else 
- 	   		clientConnectNotification.setLatestEventInfo(this, "BatDroid - " + notificationString, clientData.getClientName()+" ("+clientData.getMacAddress()+") connected ...", this.mainIntent);
- 	   	
- 	   	clientConnectNotification.flags = Notification.FLAG_AUTO_CANCEL;
- 	   	this.notificationManager.notify(this.clientNotificationCount, clientConnectNotification);
- 	   	this.clientNotificationCount++;
-    }    
     
     public boolean binariesExists() {
     	File file = new File(this.coretask.DATA_FILE_PATH+"/bin/adhoc");
@@ -596,10 +425,6 @@ public class BatDroidApplication extends Application {
 		    	if (message == null) {
 			    	message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/adhoc", "0755", R.raw.adhoc);
 		    	}
-		    	// dnsmasq
-		    	if (message == null) {
-			    	message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/dnsmasq", "0755", R.raw.dnsmasq);
-		    	}
 		    	// iptables
 		    	if (message == null) {
 			    	message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/iptables", "0755", R.raw.iptables);
@@ -616,18 +441,6 @@ public class BatDroidApplication extends Application {
 		    	if (message == null) {
 			    	message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/ultra_bcm_config", "0755", R.raw.ultra_bcm_config);
 		    	}
-		    	//pand
-		    	if (message == null) {
-			    	message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/pand", "0755", R.raw.pand);
-		    	}
-		    	// blue-up.sh
-				if (message == null) {
-					message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/blue-up.sh", "0755", R.raw.blue_up_sh);
-				}
-				// blue-down.sh
-				if (message == null) {
-					message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/blue-down.sh", "0755", R.raw.blue_down_sh);
-				}		
 				
 				/**
 				 * Installing fix-scripts if needed
@@ -647,12 +460,7 @@ public class BatDroidApplication extends Application {
 					}
 				}
 				
-		    	// dnsmasq.conf
-				if (message == null) {
-					message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/dnsmasq.conf", "0644", R.raw.dnsmasq_conf);
-					BatDroidApplication.this.coretask.updateDnsmasqFilepath();
-				}
-		    	// tiwlan.ini
+        // tiwlan.ini
 				if (message == null) {
 					BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/tiwlan.ini", "0644", R.raw.tiwlan_ini);
 				}
@@ -697,6 +505,7 @@ public class BatDroidApplication extends Application {
      * Only "versionCode" is mandatory.
      */
     public void checkForUpdate() {
+      /* TODO - updates 
     	if (this.isUpdatecDisabled()) {
     		Log.d(MSG_TAG, "Update-checks are disabled!");	
     		return;
@@ -722,9 +531,11 @@ public class BatDroidApplication extends Application {
 				Looper.loop();
 			}
     	}).start();
+      */
     }
    
     public void downloadUpdate(final String downloadFileUrl, final String fileName) {
+      /* TODO - updates
     	new Thread(new Runnable(){
 			public void run(){
 				Message msg = Message.obtain();
@@ -736,7 +547,7 @@ public class BatDroidApplication extends Application {
 			    intent.setDataAndType(android.net.Uri.fromFile(new File(WebserviceTask.DOWNLOAD_FILEPATH+"/"+fileName)),"application/vnd.android.package-archive"); 
 			    MainActivity.currentInstance.startActivity(intent);
 			}
-    	}).start();
+    	}).start();*/
     }
     
     private String copyFile(String filename, String permission, int ressource) {
@@ -839,127 +650,8 @@ public class BatDroidApplication extends Application {
     	return false;
     }    
     
-   	public void clientConnectEnable(boolean enable) {
-   		if (enable == true) {
-			if (this.clientConnectThread == null || this.clientConnectThread.isAlive() == false) {
-				this.clientConnectThread = new Thread(new ClientConnect());
-				this.clientConnectThread.start();
-			}
-   		} else {
-	    	if (this.clientConnectThread != null)
-	    		this.clientConnectThread.interrupt();
-   		}
-   	}    
     
-    class ClientConnect implements Runnable {
 
-        private ArrayList<String> knownWhitelists = new ArrayList<String>();
-        private ArrayList<String> knownLeases = new ArrayList<String>();
-        private Hashtable<String, ClientData> currentLeases = new Hashtable<String, ClientData>();
-        private long timestampLeasefile = -1;
-        private long timestampWhitelistfile = -1;
-
-        // @Override
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-            	//Log.d(MSG_TAG, "Checking for new clients ... ");
-            	// Notification-Type
-            	int notificationType = BatDroidApplication.this.getNotificationType();
-            	// Access-Control activated
-            	boolean accessControlActive = BatDroidApplication.this.whitelist.exists();
-		        // Checking if Access-Control is activated
-		        if (accessControlActive) {
-                    // Checking whitelistfile
-                    long currentTimestampWhitelistFile = BatDroidApplication.this.coretask.getModifiedDate(BatDroidApplication.this.coretask.DATA_FILE_PATH + "/conf/whitelist_mac.conf");
-                    if (this.timestampWhitelistfile != currentTimestampWhitelistFile) {
-                        knownWhitelists = BatDroidApplication.this.whitelist.get();
-                        this.timestampWhitelistfile = currentTimestampWhitelistFile;
-                    }
-		        }
-
-                // Checking leasefile
-                long currentTimestampLeaseFile = BatDroidApplication.this.coretask.getModifiedDate(BatDroidApplication.this.coretask.DATA_FILE_PATH + "/var/dnsmasq.leases");
-                if (this.timestampLeasefile != currentTimestampLeaseFile) {
-                    try {
-                    	// Getting current dns-leases
-                        this.currentLeases = BatDroidApplication.this.coretask.getLeases();
-                        
-                        // Cleaning-up knownLeases after a disconnect (dhcp-release)
-                        for (String lease : this.knownLeases) {
-                            if (this.currentLeases.containsKey(lease) == false) {
-                            	Log.d(MSG_TAG, "Removing '"+lease+"' from known-leases!");
-                                this.knownLeases.remove(lease);
-                            	
-                                notifyActivity();
-                            	BatDroidApplication.this.removeClientMac(lease);
-                            }
-                        }
-                        
-                        Enumeration<String> leases = this.currentLeases.keys();
-                        while (leases.hasMoreElements()) {
-                            String mac = leases.nextElement();
-                            Log.d(MSG_TAG, "Mac-Address: '"+mac+"' - Known Whitelist: "+knownWhitelists.contains(mac)+" - Known Lease: "+knownLeases.contains(mac));
-                            if (knownLeases.contains(mac) == false) {
-	                            if (knownWhitelists.contains(mac) == false) {
-	                            	// AddClientData to BatDroidApplication-Class for AccessControlActivity
-	                            	BatDroidApplication.this.addClientData(this.currentLeases.get(mac));
-	                            	
-	                            	if (accessControlActive) {
-	                            		if (notificationType == 1 || notificationType == 2) {
-	                            			this.sendClientMessage(this.currentLeases.get(mac),
-	                            					CLIENT_CONNECT_NOTAUTHORIZED);
-	                            		}
-	                            	}
-	                            	else {
-	                            		if (notificationType == 2) {
-	                            			this.sendClientMessage(this.currentLeases.get(mac),
-	                            					CLIENT_CONNECT_ACDISABLED);
-	                            		}
-	                            	}
-	                                this.knownLeases.add(mac);
-	                            } else if (knownWhitelists.contains(mac) == true) {
-	                            	// AddClientData to BatDroidApplication-Class for AccessControlActivity
-	                            	ClientData clientData = this.currentLeases.get(mac);
-	                            	clientData.setAccessAllowed(true);
-	                            	BatDroidApplication.this.addClientData(clientData);
-	                            	
-	                                if (notificationType == 2) {
-	                                    this.sendClientMessage(this.currentLeases.get(mac),
-	                                    		CLIENT_CONNECT_AUTHORIZED);
-	                                    this.knownLeases.add(mac);
-	                                }
-	                            }
-	                            notifyActivity();
-                            }
-                        }
-                        this.timestampLeasefile = currentTimestampLeaseFile;
-                    } catch (Exception e) {
-                        Log.d(MSG_TAG, "Unexpected error detected - Here is what I know: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-        }
-
-        private void notifyActivity(){
-        	if (AccessControlActivity.currentInstance != null){
-        		AccessControlActivity.currentInstance.clientConnectHandler.sendMessage(new Message());
-        	}
-        }
-        
-        private void sendClientMessage(ClientData clientData, int connectType) {
-            Message m = new Message();
-            m.obj = clientData;
-            m.what = connectType;
-            BatDroidApplication.this.clientConnectHandler.sendMessage(m);
-        }
-
-    }
  
     public void dnsUpdateEnable(boolean enable) {
     	this.dnsUpdateEnable(null, enable);
@@ -1002,6 +694,7 @@ public class BatDroidApplication extends Application {
     }    
     
    	public void trafficCounterEnable(boolean enable) {
+      /* TODO - traffic counter
    		if (enable == true) {
 			if (this.trafficCounterThread == null || this.trafficCounterThread.isAlive() == false) {
 				this.trafficCounterThread = new Thread(new TrafficCounter());
@@ -1011,8 +704,10 @@ public class BatDroidApplication extends Application {
 	    	if (this.trafficCounterThread != null)
 	    		this.trafficCounterThread.interrupt();
    		}
+      */
    	}
    	
+  /* TODO - TrafficCounter
    	class TrafficCounter implements Runnable {
    		private static final int INTERVAL = 2;  // Sample rate in seconds.
    		long previousDownload;
@@ -1036,9 +731,9 @@ public class BatDroidApplication extends Application {
 		        datacount.uploadRate = (long) ((datacount.totalUpload - this.previousUpload)*8/elapsedTime);
 		        datacount.downloadRate = (long) ((datacount.totalDownload - this.previousDownload)*8/elapsedTime);
 				Message message = Message.obtain();
-				message.what = MainActivity.MESSAGE_TRAFFIC_COUNT;
+				message.what = batdroid.MESSAGE_TRAFFIC_COUNT;
 				message.obj = datacount;
-				MainActivity.currentInstance.viewUpdateHandler.sendMessage(message); 
+				batdroid.currentInstance.viewUpdateHandler.sendMessage(message); 
 				this.previousUpload = datacount.totalUpload;
 				this.previousDownload = datacount.totalDownload;
                 try {
@@ -1048,10 +743,11 @@ public class BatDroidApplication extends Application {
                 }
    			}
 			Message message = Message.obtain();
-			message.what = MainActivity.MESSAGE_TRAFFIC_END;
-			MainActivity.currentInstance.viewUpdateHandler.sendMessage(message); 
+			message.what = batdroid.MESSAGE_TRAFFIC_END;
+			batdroid.currentInstance.viewUpdateHandler.sendMessage(message); 
    		}
    	}
+  */
    	
    	public class DataCount {
    		// Total data uploaded
