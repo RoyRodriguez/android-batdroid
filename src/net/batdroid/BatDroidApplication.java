@@ -118,6 +118,12 @@ public class BatDroidApplication extends Application {
     new Thread(new Runnable(){
         public void run(){
           String message = null;
+
+	  //Batmand binarie,  "batmand-rv1543_armv6l" renamed to "batmand"
+	 if (message == null) {
+            BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/batmand", "0755", 	R.raw.tether_conf);
+          }
+
           // tether
           if (message == null) {
             message = BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/bin/tether", "0755", R.raw.tether);
@@ -168,7 +174,8 @@ public class BatDroidApplication extends Application {
           if (message == null) {
             BatDroidApplication.this.copyFile(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/tether.conf", "0644", R.raw.tether_conf);
           }
-                                
+
+                               
           // wpa_supplicant drops privileges, we need to make files readable.
           BatDroidApplication.this.coretask.chmod(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/", "0755");
 

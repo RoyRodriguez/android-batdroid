@@ -35,10 +35,10 @@ action() == "start" && (
 		  #
 		  # Loading firmware
 		  #
-		  file_exists("/sdcard/android.tether/fw_bcm4329.bin") && (
-	      	module_loaded("bcm4329") || log(insmod("/system/lib/modules/bcm4329.ko", "firmware_path=/sdcard/android.tether/fw_bcm4329.bin"), "Loading bcm4329.ko module<br>(fw_bcm4329.bin from /sdcard/android.tether)");
+		  file_exists("/sdcard/net.batdroid/fw_bcm4329.bin") && (
+	      	module_loaded("bcm4329") || log(insmod("/system/lib/modules/bcm4329.ko", "firmware_path=/sdcard/net.batdroid/fw_bcm4329.bin"), "Loading bcm4329.ko module<br>(fw_bcm4329.bin from /sdcard/net.batdroid)");
 	      );      
-	      !file_exists("/sdcard/android.tether/fw_bcm4329.bin") && (
+	      !file_exists("/sdcard/net.batdroid/fw_bcm4329.bin") && (
 	        file_exists("/etc/firmware/fw_bcm4329_ap.bin") && (
 	        	module_loaded("bcm4329") || log(insmod("/system/lib/modules/bcm4329.ko", "firmware_path=/etc/firmware/fw_bcm4329_ap.bin"), "Loading bcm4329.ko module<br>(fw_bcm4329_ap.bin from /etc/firmware)");
 	        );
@@ -68,10 +68,10 @@ action() == "start" && (
 		  #
 		  # Loading firmware
 		  #	   
-		  file_exists("/sdcard/android.tether/fw_bcm4329.bin") && (
-	      	module_loaded("bcm4329") || log(insmod("/system/lib/modules/bcm4329.ko", "firmware_path=/sdcard/android.tether/fw_bcm4329.bin"), "Loading bcm4329.ko module<br>(fw_bcm4329.bin from /sdcard/android.tether)");
+		  file_exists("/sdcard/net.batdroid/fw_bcm4329.bin") && (
+	      	module_loaded("bcm4329") || log(insmod("/system/lib/modules/bcm4329.ko", "firmware_path=/sdcard/net.batdroid/fw_bcm4329.bin"), "Loading bcm4329.ko module<br>(fw_bcm4329.bin from /sdcard/net.batdroid)");
 	      );      
-	      !file_exists("/sdcard/android.tether/fw_bcm4329.bin") && (
+	      !file_exists("/sdcard/net.batdroid/fw_bcm4329.bin") && (
 	        file_exists("/etc/firmware/fw_bcm4329_ap.bin") && (
 	        	module_loaded("bcm4329") || log(insmod("/system/lib/modules/bcm4329.ko", "firmware_path=/etc/firmware/fw_bcm4329_ap.bin"), "Loading bcm4329.ko module<br>(fw_bcm4329_ap.bin from /etc/firmware)");
 	        );
@@ -98,12 +98,12 @@ action() == "start" && (
     );
     
     is_substring("galaxy", getcfg("device.type")) && (
-	  file_exists("/sdcard/android.tether/rtecdc.bin") && (
+	  file_exists("/sdcard/net.batdroid/rtecdc.bin") && (
  	      module_loaded("bcm4325") || log(insmod("/system/libmodules/bcm4325.ko",
-	                                             	"firmware_path=/sdcard/android.tether/rtecdc.bin nvram_path=/etc/nvram.txt"),
-	                                      			"Loading bcm4325.ko module<br>(rtecdc.bin from /sdcard/android.tether)");
+	                                             	"firmware_path=/sdcard/net.batdroid/rtecdc.bin nvram_path=/etc/nvram.txt"),
+	                                      			"Loading bcm4325.ko module<br>(rtecdc.bin from /sdcard/net.batdroid)");
 	  );     
-      !file_exists("/sdcard/android.tether/rtecdc.bin") && (
+      !file_exists("/sdcard/net.batdroid/rtecdc.bin") && (
 		  !file_exists("/etc/rtecdc_adhoc.bin") && (
 		      module_loaded("bcm4325") || log(insmod("/system/libmodules/bcm4325.ko", 
 		      										"firmware_path=/etc/rtecdc.bin nvram_path=/etc/nvram.txt"), 
@@ -162,11 +162,11 @@ action() == "start" && (
       # HTC dream/magic/tattoo/eris
       #      
 	  module_loaded("wlan") || log(insmod("/system/lib/modules/wlan.ko", ""), "Loading wlan.ko module");
-      file_exists("/sdcard/android.tether/Fw1251r1c.bin") && (
- 	      log(run_program("/system/bin/wlan_loader -f /sdcard/android.tether/Fw1251r1c.bin -e " +
-	                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /sdcard/android.tether)");
+      file_exists("/sdcard/net.batdroid/Fw1251r1c.bin") && (
+ 	      log(run_program("/system/bin/wlan_loader -f /sdcard/net.batdroid/Fw1251r1c.bin -e " +
+	                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /sdcard/net.batdroid)");
       );
-      !file_exists("/sdcard/android.tether/Fw1251r1c.bin") && (
+      !file_exists("/sdcard/net.batdroid/Fw1251r1c.bin") && (
 	      file_exists("/system/etc/wifi/Fw1251r1c.bin") && (
 		      log(run_program("/system/bin/wlan_loader -f /system/etc/wifi/Fw1251r1c.bin -e " +
 		                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /system/etc/wifi)");
@@ -192,11 +192,11 @@ action() == "start" && (
 	    run_program("/system/bin/ip route delete table gprs");      
       
       module_loaded("wlan") || log(insmod("/system/lib/modules/wlan.ko", ""), "Loading wlan.ko module");
-      file_exists("/sdcard/android.tether/Fw1251r1c.bin") && (
- 	      log(run_program("/system/bin/wlan_loader -f /sdcard/android.tether/Fw1251r1c.bin -e " +
-	                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /sdcard/android.tether)");
+      file_exists("/sdcard/net.batdroid/Fw1251r1c.bin") && (
+ 	      log(run_program("/system/bin/wlan_loader -f /sdcard/net.batdroid/Fw1251r1c.bin -e " +
+	                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /sdcard/net.batdroid)");
       );     
-      !file_exists("/sdcard/android.tether/Fw1251r1c.bin") && (
+      !file_exists("/sdcard/net.batdroid/Fw1251r1c.bin") && (
 	      file_exists("/system/etc/wifi/Fw1251r1c.bin") && (
 	      log(run_program("/system/bin/wlan_loader -f /system/etc/wifi/Fw1251r1c.bin -e " +
 	                  "/proc/calibration -i /data/data/net.batdroid/conf/tiwlan.ini"), "Configuring WiFi interface<br>(Fw1251r1c.bin from /system/etc/wifi)");
@@ -218,10 +218,10 @@ action() == "start" && (
       #
       # Samsung Moment
       #
-      file_exists("/sdcard/android.tether/rtecdc.bin") && (
-      	module_loaded("dhd") || log(insmod("/lib/modules/dhd.ko", "firmware_path=/sdcard/android.tether/rtecdc.bin nvram_path=/etc/nvram.txt"), "Loading dhd.ko module");
+      file_exists("/sdcard/net.batdroid/rtecdc.bin") && (
+      	module_loaded("dhd") || log(insmod("/lib/modules/dhd.ko", "firmware_path=/sdcard/net.batdroid/rtecdc.bin nvram_path=/etc/nvram.txt"), "Loading dhd.ko module");
       );      
-      !file_exists("/sdcard/android.tether/rtecdc.bin") && (
+      !file_exists("/sdcard/net.batdroid/rtecdc.bin") && (
         !file_exists("/etc/rtecdc_adhoc.bin") && (
       		module_loaded("dhd") || log(insmod("/lib/modules/dhd.ko", "firmware_path=/etc/rtecdc.bin nvram_path=/etc/nvram.txt"), "Loading dhd.ko module");
       	);

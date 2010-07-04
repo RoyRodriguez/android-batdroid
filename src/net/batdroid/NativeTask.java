@@ -1,4 +1,4 @@
-package net.batdroid;
+package android.tether.system;
 
 import android.util.Log;
 
