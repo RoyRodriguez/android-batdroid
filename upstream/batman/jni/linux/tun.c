@@ -37,14 +37,15 @@
 #include "../os.h"
 #include "../batman.h"
 
-#define IPTABLES_ADD_MASQ "iptables -t nat -A POSTROUTING -o %s -j MASQUERADE"
-#define IPTABLES_DEL_MASQ "iptables -t nat -D POSTROUTING -o %s -j MASQUERADE"
+// TODO ANDROID : don't hardcode iptables path
+#define IPTABLES_ADD_MASQ "/data/data/net.batdroid/bin/iptables -t nat -A POSTROUTING -o %s -j MASQUERADE"
+#define IPTABLES_DEL_MASQ "/data/data/net.batdroid/bin/iptables -t nat -D POSTROUTING -o %s -j MASQUERADE"
 
-#define IPTABLES_ADD_MSS "iptables -t mangle -I POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o %s -j TCPMSS --clamp-mss-to-pmtu"
-#define IPTABLES_DEL_MSS "iptables -t mangle -D POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o %s -j TCPMSS --clamp-mss-to-pmtu"
+#define IPTABLES_ADD_MSS "/data/data/net.batdroid/bin/iptables -t mangle -I POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o %s -j TCPMSS --clamp-mss-to-pmtu"
+#define IPTABLES_DEL_MSS "/data/data/net.batdroid/bin/iptables -t mangle -D POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o %s -j TCPMSS --clamp-mss-to-pmtu"
 
-#define IPTABLES_ADD_ACC "iptables -t nat -I POSTROUTING -s %s/%i -j ACCEPT"
-#define IPTABLES_DEL_ACC "iptables -t nat -D POSTROUTING -s %s/%i -j ACCEPT"
+#define IPTABLES_ADD_ACC "/data/data/net.batdroid/bin/iptables -t nat -I POSTROUTING -s %s/%i -j ACCEPT"
+#define IPTABLES_DEL_ACC "/data/data/net.batdroid/bin/iptables -t nat -D POSTROUTING -s %s/%i -j ACCEPT"
 
 
 int run_cmd(char *cmd) {
@@ -87,7 +88,7 @@ int run_cmd(char *cmd) {
 
 /* Probe for iptables binary availability */
 int probe_nat_tool(void) {
-	return run_cmd("which iptables > /dev/null");
+	return 1; /* ANDROID: We don't have 'which' on most phones and we ship w/ iptables installed - run_cmd("which iptables > /dev/null");*/
 }
 
 void exec_iptables_rule(char *cmd, int8_t route_action) {
