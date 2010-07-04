@@ -196,8 +196,7 @@ public class BatDroidApplication extends Application {
 		// Checking if rp_filter is active
 		if (this.coretask.isRPFilterEnabled()) {
 			this.adhoccfg.put("system.rp_filter", "1");
-		}
-		else {
+		}	else {
 			this.adhoccfg.put("system.rp_filter", "0");
 		}
 		
@@ -206,21 +205,21 @@ public class BatDroidApplication extends Application {
 		 */
 		if (Configuration.getWifiInterfaceDriver(this.deviceType).equals(Configuration.DRIVER_SOFTAP_GOG)) {
 			this.adhoccfg.put("wifi.interface", "wl0.1");
-		}
-		else {
+		} else {
 			this.adhoccfg.put("wifi.interface", this.coretask.getProp("wifi.interface"));
 		}
 
 		this.adhoccfg.put("wifi.txpower", txpower);
 
-			this.adhoccfg.put("wifi.encryption", "open");
-			this.adhoccfg.put("wifi.encryption.key", "none");
-			
-			// Make sure to remove wpa_supplicant.conf
-			if (this.wpasupplicant.exists()) {
-				this.wpasupplicant.remove();
-			}			
+    // Make sure to remove wpa_supplicant.conf
+    if (this.wpasupplicant.exists()) {
+      this.wpasupplicant.remove();
+    }			
 
+    // install wpa_supplicant
+    this.installWpaSupplicantConfig();
+    this.adhoccfg.put("wifi.encryption", "open");
+    this.adhoccfg.put("wifi.encryption.key", "none");
 		
 		// determine driver wpa_supplicant
 		this.adhoccfg.put("wifi.driver", Configuration.getWifiInterfaceDriver(deviceType));
