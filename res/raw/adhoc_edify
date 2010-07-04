@@ -357,8 +357,15 @@ action() == "start" && (
   #  "Enabling access control."
   #  );
 
+  #
+  # Start B.A.T.M.A.N.
+  #
+  log(
+    run_program("/data/data/net.batdroid/bin/batmand " + getcfg("wifi.interface")),
+    "Started batmand daemon."
+  );
 
-  log("Tethering now running");
+  log("B.A.T.M.A.N. now running");
 );
 
 #
@@ -370,23 +377,12 @@ action() == "stop" && (
   #
   setprop("tether.status","stopped");
 
-  #
-  # Bluetooth, kill pand and and dnsmasq processes
-  #
-  #getcfg("tether.mode") == "bt" && (
-  #  run_program("/data/data/net.batdroid/bin/pand -K");
-  #  sleep("1");
-  #  kill_process("pand");
-  #  file_unlink("/data/data/net.batdroid/var/pand.pid");
-  #  kill_process("dnsmasq");
-  #  kill_pidfile("/data/data/net.batdroid/var/fixroute.pid");
-  #  file_unlink("/data/data/net.batdroid/var/fixroute.pid");
-  #);
   
   #
-  # Wifi mode, bring interface down, kill dnsmasq/wpa_supplicant, remove module.
+  # Kill B.A.T.M.A.N. process, bring interface down, kill dnsmasq/wpa_supplicant, remove module.
   #
   getcfg("tether.mode") == "wifi" && (
+    kill_process("batmand");
     run_program("/data/data/net.batdroid/bin/ifconfig " +  getcfg("wifi.interface") + " down");
     kill_process("wpa_supplicant");
     #kill_process("dnsmasq");
@@ -433,7 +429,7 @@ action() == "stop" && (
     #run_program("/data/data/net.batdroid/bin/iptables -t nat -F"),
     #"Disabling NAT rules");
 
-  log("Tethering now stopped");
+  log("B.A.T.M.A.N. now stopped");
   
 );
 
