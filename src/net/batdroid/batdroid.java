@@ -82,11 +82,11 @@ public class batdroid extends Activity implements OnClickListener
         //  this.openNotRootDialog();
         
         // Check if binaries need to be updated
-        /*if (this.application.binariesExists() == false || this.application.coretask.filesetOutdated()) {
+        if (this.application.binariesExists() == false || this.application.coretask.filesetOutdated()) {
           if (this.application.coretask.hasRootPermission()) {
             this.application.installFiles();
           }
-        }*/
+        }
       }
     }
 
