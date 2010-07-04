@@ -212,7 +212,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                 }
                         }
                         else if (key.equals("ippref")) {
-                                String newIP = sharedPreferences.getString("ippref", "10.0.0.0/8");
+                                String newIP = sharedPreferences.getString("ippref", "10.0.0.254");
                                 if (SetupActivity.this.currentIpAddress.equals(newIP) == false) {
                                         SetupActivity.this.currentIpAddress = newIP;
                                         message = "IP changed to '"+newIP+"'.";
@@ -236,7 +236,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                 }
                         }
                         else if (key.equals("netmaskpref")) {
-                                String newNetmask = sharedPreferences.getString("netmaskpref", "255.255.255.0");
+                                String newNetmask = sharedPreferences.getString("netmaskpref", "255.0.0.0");
                                 if (SetupActivity.this.currentNetmask.equals(newNetmask) == false) {
                                         SetupActivity.this.currentNetmask = newNetmask;
                                         message = "Netmask changed to '"+newNetmask+"'.";

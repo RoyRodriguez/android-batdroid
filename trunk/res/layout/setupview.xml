@@ -20,7 +20,7 @@
                         android:entries="@array/channelnames"  
                         android:entryValues="@array/channelvalues"  
                         android:dialogTitle="@string/setup_layout_channel_dialog_title"
-                        android:defaultValue="11" /> 
+                        android:defaultValue="5" /> 
                 <ListPreference  
                         android:key="txpowerpref"  
                         android:title="@string/setup_layout_txpower"  
@@ -39,7 +39,7 @@
                         android:entries="@array/lannetworkvalues"  
                         android:entryValues="@array/lannetworkvalues"  
                         android:dialogTitle="@string/setup_layout_lan_dialog_title"
-                        android:defaultValue="192.168.2.0/24" />  
+                        android:defaultValue="10.0.0.0/8" />  
                 <EditTextPreference  
                         android:key="ippref"  
                         android:title="@string/setup_layout_ip"  
@@ -47,7 +47,7 @@
                         android:dialogTitle="@string/setup_layout_ip_dialog_title" 
                         android:maxLength="15"  
                         android:dialogMessage="@string/setup_layout_ip_dialog_message"
-                        android:defaultValue="10.0.0.0/8"
+                        android:defaultValue="10.0.0.254"
                 /> 
                 <EditTextPreference  
                         android:key="netmaskpref"  
@@ -56,7 +56,7 @@
                         android:dialogTitle="@string/setup_layout_netmask_dialog_title" 
                         android:maxLength="15"  
                         android:dialogMessage="@string/setup_layout_netmask_dialog_message"
-                        android:defaultValue="255.255.255.0"
+                        android:defaultValue="255.0.0.0"
                 /> 
        
         </PreferenceCategory>
