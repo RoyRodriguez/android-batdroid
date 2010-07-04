@@ -33,7 +33,7 @@ import android.tether.system.NativeTask;
 
 public class CoreTask {
 
-	public static final String MSG_TAG = "TETHER -> CoreTask";
+	public static final String MSG_TAG = "BATDROID -> CoreTask";
 	
 	public String DATA_FILE_PATH;
 	

@@ -67,14 +67,14 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
         // Init Application
         this.application = (BatDroidApplication)this.getApplication();
        
-        // Init CurrentSettings
-        this.currentSSID = "ssidpref";//this.application.settings.getString("ssidpref", "AndroidTether");
-	this.currentIpAddress = "10.0.0.0/8";
-	this.currentNetmask = "255.255.255.0";
-        this.currentChannel = "channelpref";// this.application.settings.getString("channelpref", "6");
+        // Init CurrentSettings - TODO ? Don't we need to getString?
+        this.currentSSID = "ssidpref";//this.application.settings.getString("ssidpref", "batman");
+        this.currentIpAddress = "10.0.0.0/8";
+        this.currentNetmask = "255.255.255.0";
+        this.currentChannel = "channelpref";// this.application.settings.getString("channelpref", "11");
         this.currentLAN = "lannetworkpref";//this.application.settings.getString("lannetworkpref", this.application.DEFAULT_LANNETWORK);
         this.currentTransmitPower = "txpowerpref";//this.application.settings.getString("txpowerpref", "disabled");
-       
+        
         addPreferencesFromResource(R.layout.setupview);
 
         // Disable "Transmit power" if not supported
@@ -188,7 +188,7 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                         public void run(){
                                 String message = null;
                         if (key.equals("ssidpref")) {
-                                String newSSID = sharedPreferences.getString("ssidpref", "AndroidTether");
+                                String newSSID = sharedPreferences.getString("ssidpref", "batman");
                                 if (SetupActivity.this.currentSSID.equals(newSSID) == false) {
                                         SetupActivity.this.currentSSID = newSSID;
                                         message = "SSID changed to '"+newSSID+"'.";
@@ -196,8 +196,8 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 if (application.coretask.isNatEnabled() && application.coretask.isProcessRunning("bin/dnsmasq")) {
                                                         // Show RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(0);
-                                                        // Restart Tethering
-                                                        //SetupActivity.this.application.restartTether();
+                                                        // Restart B.A.T.M.A.N. - TODO
+                                                        //SetupActivity.this.application.restartBatman();
                                                         // Dismiss RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(1);
                                                 }
@@ -220,8 +220,8 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 if (application.coretask.isNatEnabled() && application.coretask.isProcessRunning("bin/dnsmasq")) {
                                                         // Show RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(0);
-                                                        // Restart Tethering
-                                                        //SetupActivity.this.application.restartTether();
+                                                        // Restart B.A.T.M.A.N. - TODO
+                                                        //SetupActivity.this.application.restartBatman();
                                                         // Dismiss RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(1);
                                                 }
@@ -244,8 +244,8 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 if (application.coretask.isNatEnabled() && application.coretask.isProcessRunning("bin/dnsmasq")) {
                                                         // Show RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(0);
-                                                        // Restart Tethering
-                                                        //SetupActivity.this.application.restartTether();
+                                                        // Restart B.A.T.M.A.N. - TODO
+                                                        //SetupActivity.this.application.restartBatman();
                                                         // Dismiss RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(1);
                                                 }
@@ -268,8 +268,8 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 if (application.coretask.isNatEnabled() && application.coretask.isProcessRunning("bin/dnsmasq")) {
                                                         // Show RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(0);
-                                                        // Restart Tethering
-                                                        //SetupActivity.this.application.restartTether();
+                                                        // Restart B.A.T.M.A.N. - TODO
+                                                        //SetupActivity.this.application.restartBatman();
                                                         // Dismiss RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(1);
                                                 }
@@ -315,8 +315,8 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                         if (application.coretask.isNatEnabled() && application.coretask.isProcessRunning("bin/dnsmasq")) {
                                                         // Show RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(0);
-                                                        // Restart Tethering
-                                                                //SetupActivity.this.application.restartTether();
+                                                        // Restart B.A.T.M.A.N. - TODO 
+                                                        //SetupActivity.this.application.restartBatman();
                                                         // Dismiss RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(1);
                                                         }
@@ -342,8 +342,8 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                         if (application.coretask.isNatEnabled() && application.coretask.isProcessRunning("bin/dnsmasq")) {
                                                         // Show RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(0);
-                                                        // Restart Tethering
-                                                                //SetupActivity.this.application.restartTether();
+                                                        // Restart B.A.T.M.A.N. - TODO
+                                                        //SetupActivity.this.application.restartBatman();
                                                         // Dismiss RestartDialog
                                                         SetupActivity.this.restartingDialogHandler.sendEmptyMessage(1);
                                                         }
@@ -371,8 +371,8 @@ public class SetupActivity extends PreferenceActivity implements OnSharedPrefere
                                                 // Show RestartDialog
                                                 SetupActivity.this.restartingDialogHandler.sendEmptyMessage(0);
                                                
-                                                // Restart Tethering
-                                                //SetupActivity.this.application.restartTether();
+                                                // Restart B.A.T.M.A.N. - TODO
+                                                //SetupActivity.this.application.restartBatman();
 
                                                 // Dismiss RestartDialog
                                                 SetupActivity.this.restartingDialogHandler.sendEmptyMessage(1);
