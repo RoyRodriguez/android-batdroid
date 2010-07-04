@@ -78,8 +78,8 @@ public class batdroid extends Activity implements OnClickListener
         this.application.startupCheckPerformed = true;
                 
         // TODO - Check root-permission, files
-        //if (!this.application.coretask.hasRootPermission())
-        //  this.openNotRootDialog();
+        if (!this.application.coretask.hasRootPermission())
+          this.openNotRootDialog();
         
         // Check if binaries need to be updated
         if (this.application.binariesExists() == false || this.application.coretask.filesetOutdated()) {
@@ -155,6 +155,28 @@ public class batdroid extends Activity implements OnClickListener
         return supRetVal;
     } 
 
+
+  private void openNotRootDialog() {
+    LayoutInflater li = LayoutInflater.from(this);
+    View view = li.inflate(R.layout.norootview, null); 
+    new AlertDialog.Builder(batdroid.this)
+      .setTitle("Not Root!")
+      .setView(view)
+      .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            Log.d(MSG_TAG, "Close pressed");
+            batdroid.this.finish();
+          }
+        })
+      .setNeutralButton("Ignore", new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            Log.d(MSG_TAG, "Override pressed");
+            batdroid.this.application.installFiles();
+            batdroid.this.application.displayToastMessage("Ignoring, note that this application will NOT work correctly.");
+          }
+        })
+      .show();
+  }
 
 
 }
