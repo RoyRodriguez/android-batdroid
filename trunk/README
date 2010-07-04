@@ -1,2 +1,12 @@
 
+adhoc-edify
+===========
+
+cutils headers can be found at: 
+  
+  git clone git://android.git.kernel.org/platform/system/core.git
+
+     include/cutils
+
+
 
