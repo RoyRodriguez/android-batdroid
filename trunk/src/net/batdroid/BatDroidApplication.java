@@ -668,17 +668,19 @@ public class BatDroidApplication extends Application {
 				// wpa_supplicant drops privileges, we need to make files readable.
 				BatDroidApplication.this.coretask.chmod(BatDroidApplication.this.coretask.DATA_FILE_PATH+"/conf/", "0755");
 
-				if (message == null) {
-			    	message = "Binaries and config-files installed!";
-				}
-				
-				// Sending message
-				Message msg = new Message();
-				msg.obj = message;
-				BatDroidApplication.this.displayMessageHandler.sendMessage(msg);
-			}
-		}).start();
-    }
+  // Display Toast-Message
+  public void displayToastMessage(String message) {
+    LayoutInflater li = LayoutInflater.from(this);
+    System.out.println("I just wanna see what happens.");
+    View layout = li.inflate(R.layout.toastview, null);
+    TextView text = (TextView) layout.findViewById(R.id.toastText);
+    text.setText(message);
+    Toast toast = new Toast(getApplicationContext());
+    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+    toast.setDuration(Toast.LENGTH_LONG);
+    toast.setView(layout);
+    toast.show();
+  }
     
     /*
      * Update checking. We go to a predefined URL and fetch a properties style file containing

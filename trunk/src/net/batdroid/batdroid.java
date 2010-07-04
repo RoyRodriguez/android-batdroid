@@ -37,6 +37,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import android.view.LayoutInflater;
+import android.app.AlertDialog;
+import android.view.InflateException;
 
 public class batdroid extends Activity implements OnClickListener
 {
