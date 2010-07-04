@@ -22,8 +22,13 @@
 #include <sys/stat.h>
 
 #include "edify/expr.h"
+
 #include "adhoc.h"
 #include "install.h"
+
+// make it a bit cleaner
+extern int yyparse(Expr** root, int* error_count);
+
 
 // Where in the package we expect to find the edify script to execute.
 #define SCRIPT_NAME "/data/data/net.batdroid/conf/adhoc.edify"
